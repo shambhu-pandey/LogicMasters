@@ -41,7 +41,7 @@ void counting(int n){
     }
 
     counting(n-1);
-    cout<<n<<endl;;
+    cout<<n<<endl;
 }
 
 int main(){
