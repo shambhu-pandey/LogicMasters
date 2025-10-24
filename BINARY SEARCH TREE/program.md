@@ -17,7 +17,7 @@ Each problem includes **problem statement, examples, your solution code, complex
 ---
 
 
-### 📘 Create a Binary Search Tree and Perform Tree Traversals {#bst-traversals}
+# 1. 📘 Create a Binary Search Tree and Perform Tree Traversals {#bst-traversals}
 
 **File:** `BST_Traversal.cpp`
 **Language:** C++
@@ -189,7 +189,7 @@ int main(){
 
 ---
 
-### 🔍 Search a Node in BST {#search-node-bst}
+# 2.🔍 Search a Node in BST {#search-node-bst}
 
 **Practice this question on:**
 [GeeksforGeeks](https://www.geeksforgeeks.org/binary-search-tree-data-structure/) | [LeetCode](https://leetcode.com/) | [Coding Ninjas](https://www.codingninjas.com/)
@@ -308,13 +308,8 @@ bool searchInBST(BinaryTreeNode<int> *root, int x) {
 
 
 
-## 🌳 Binary Search Tree (BST) - Deletion Operations in C++
 
-This file demonstrates **deletion operations in a BST** along with **all traversals, min/max, and insertion**.
-
----
-
-### 🌳 Binary Search Tree Deletion Operations in C++ {#bst-deletion}
+# 3. 🌳 Binary Search Tree Deletion Operations in C++ {#bst-deletion}
 
 **File:** `BST_Deletion.cpp`
 **Language:** C++
@@ -543,7 +538,7 @@ int main(){
 
 
 
-### 🌳 Two Sum in BST - LeetCode Problem {#two-sum-bst}
+# 4 .🌳 Two Sum in BST - LeetCode Problem {#two-sum-bst}
 
 ### 🌐 Practice Websites
 
@@ -663,7 +658,7 @@ public:
 ---
 
 
-# 🌳 Flatten BST To A Sorted List
+# 5. 🌳 Flatten BST To A Sorted List
 
 ### 🌐 Practice Websites
 
@@ -753,7 +748,7 @@ TreeNode<int>* flatten(TreeNode<int>* root)
 
 
 
-## 🌲 Normal BST To Balanced BST
+# 6. 🌲 Normal BST To Balanced BST
 
 ### 🧩 Problem Statement
 
