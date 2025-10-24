@@ -350,7 +350,7 @@
 
 
 // letter combinations of a phone number leetcode problem 17
-
+//slides link : 
 class Solution {
     private:
     void solve(string digits, int index ,string output ,vector<string>&ans , string mapping[]){
@@ -392,6 +392,7 @@ public:
 
 
 // subsets leetcode 78
+//slides link : https://drive.google.com/file/d/1VPaZB14_cpl1yx8f5yyvNdHJuE42CEpG/view
 class Solution {
 
  void    solve(vector<int> nums , int index,vector<int> output, vector<vector<int>> &ans){
@@ -420,8 +421,7 @@ public:
 };
 
 
-// subsequences 
-
+// subsequences code studio
 #include <bits/stdc++.h> 
 using namespace std;
 
@@ -454,7 +454,7 @@ vector<string> subsequences(string str){
 
 
 //permutations leetcode 46
-
+// slides link : https://drive.google.com/file/d/1UcPqTr312lG5lffIPEB8rU7KKnZDDwAI/view
 class Solution {
     private:
     void solve(vector<int> nums , int index , vector<vector<int>>& ans){
@@ -483,6 +483,7 @@ public:
 
 
 // rat in maze problem 
+  // slides link : https://drive.google.com/file/d/1XJ0WuSmJNWoH-sgzk-1Y_ofGltC3IxZ2/view
 class Solution {
 private:
     // Function to check whether the current cell (x, y) is safe to move into
@@ -499,6 +500,7 @@ private:
     }
 
     // Recursive function to find all possible paths
+
     void solve(vector<vector<int>>& maze, int n, vector<string>& ans,
                int x, int y, vector<vector<int>> visited, string path) {
 
@@ -581,3 +583,4 @@ public:
         return ans;
     }
 };
+
