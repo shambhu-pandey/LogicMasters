@@ -4,13 +4,18 @@ Welcome to the **BST Problem Set**! 💡
 This collection features **common problems solved using Binary Search Tree in C++**.
 Each problem includes **problem statement, examples, your solution code, complexity analysis, and practice links**.
 
+---
 ## 📑 Table of Contents
-1. [📘 Create a Binary Search Tree and Perform Tree Traversals](#📘-create-a-binary-search-tree-and-perform-tree-traversals)
-2. [🔍 Search a Node in BST](#🔍-search-a-node-in-bst)
-3. [🌳 Binary Search Tree Deletion Operations in C++](#🌳-binary-search-tree-deletion-operations-in-c)
-4. [🌳 Two Sum in BST - LeetCode Problem](#🌳-two-sum-in-bst---leetcode-problem)
+
+1. [📘 Create a Binary Search Tree and Perform Tree Traversals](#create-a-binary-search-tree-and-perform-tree-traversals)
+2. [🔍 Search a Node in BST](#search-a-node-in-bst)
+3. [🌳 Binary Search Tree Deletion Operations in C++](#binary-search-tree-deletion-operations-in-c)
+4. [🌳 Two Sum in BST - LeetCode Problem](#two-sum-in-bst---leetcode-problem)
+5. [🌿 Flatten BST To A Sorted List](#flatten-bst-to-a-sorted-list)
+6. [🌲 Normal BST To Balanced BST](#normal-bst-to-balanced-bst)
 
 ---
+
 
 ### 📘 Create a Binary Search Tree and Perform Tree Traversals {#bst-traversals}
 
@@ -540,7 +545,11 @@ int main(){
 
 ### 🌳 Two Sum in BST - LeetCode Problem {#two-sum-bst}
 
-This Markdown file demonstrates a **Two Sum problem in a Binary Search Tree (BST)** using **inorder traversal and two-pointer approach**.
+### 🌐 Practice Websites
+
+* [LeetCode - Two Sum IV: Input is a BST](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/)
+* [Coding Ninjas - Pair Sum in BST](https://www.codingninjas.com/codestudio/problems/pair-sum-in-bst_920493)
+
 
 ---
 
@@ -649,3 +658,240 @@ public:
 
 * Inorder traversal is key because it gives sorted elements of BST.
 * Two-pointer approach works efficiently on the sorted array.
+
+
+---
+
+
+# 🌳 Flatten BST To A Sorted List
+
+### 🌐 Practice Websites
+
+* [Coding Ninjas - Flatten BST to Sorted List](https://www.codingninjas.com/studio/problems/flatten-bst-to-a-sorted-list_1112606)
+* [GeeksforGeeks - Flatten BST to Linked List](https://practice.geeksforgeeks.org/problems/flatten-bst-to-sorted-list/1)
+* [LeetCode - Increasing Order Search Tree](https://leetcode.com/problems/increasing-order-search-tree/)
+
+
+## 🧩 Problem Statement
+You have been given a **Binary Search Tree (BST)**. Your task is to **flatten the given BST to a sorted list**. More formally, you have to make a **right-skewed BST** from the given BST, i.e., the **left child of all the nodes must be NULL**, and the value at the **right child must be greater than the current node**.  
+
+A **binary search tree (BST)**, also called an ordered or sorted binary tree, is a rooted binary tree whose internal nodes each store a value greater than all the values in the node's left subtree and less than those in its right subtree.  
+
+### ⚡ Follow Up
+Can you solve this in **O(N) time** and **O(H) space complexity**?
+
+---
+
+## 🖼️ Example
+
+![BST Image](image-4.png)  
+![BST Image](image-2.png)  
+![Flattened BST Image](image-3.png)
+
+---
+
+## 💡 Approach / Solution
+
+1. **Inorder Traversal:**  
+   Since **inorder traversal of a BST gives sorted values**, we first collect the BST nodes in sorted order.  
+
+2. **Create New Right-Skewed Tree:**  
+   Using the inorder values, create a new tree where:
+   - `left` child of all nodes = `NULL`
+   - `right` child points to the next node in sorted order  
+
+3. **Return the New Root:**  
+   The first node of inorder becomes the root of the flattened tree.
+
+---
+
+## 💻 C++ Code Implementation
+```cpp
+/*************************************************************/
+// question me bol rha hai ki , -> isko flat kar ke linked list bna do jo ki sorted hona chahiye  means sorted linkedlist
+// soln : hme pta hai bst ki property ki inorder sorted me hota hai , toh kyu na iorder nikaalle aur node bna de inorder ka value ko . 
+// aur left pointer null (jo ki question me bola hai ) , aur right pointer ko aage wala element par 
+// aur last step , last wala element ka left bhi null kar do aur right bhi 
+// aur last me hme flatteerd bn jaayega 
+void inorder(TreeNode<int>*root ,vector<int>& inorderVal){
+    if(root==NULL){
+        return;
+    }
+    inorder(root->left , inorderVal);
+    inorderVal.push_back(root->data);
+    inorder(root->right ,inorderVal);
+
+}
+TreeNode<int>* flatten(TreeNode<int>* root)
+{
+    vector<int> inorderVal;
+    inorder(root , inorderVal);
+    
+    int n = inorderVal.size();
+    // create new node with first value 
+    TreeNode<int>* newroot = new TreeNode<int>(inorderVal[0]);
+    TreeNode<int>* curr = newroot;   // point to the first node 
+    
+    // Create remaining nodes and link them as right child
+    for(int i =1; i<n;i++){
+        TreeNode<int>* temp = new TreeNode<int>(inorderVal[i]);
+        curr->left = NULL;   // left child is always NULL
+        curr->right = temp;   // link new node as right child
+        curr=temp;            // move current pointer forward
+
+    }
+
+       // Make sure last node has NULL children
+    curr->left =NULL;
+    curr->right = NULL;
+
+    return newroot;  // return root of flattened tree
+}
+```
+
+---
+
+
+
+## 🌲 Normal BST To Balanced BST
+
+### 🧩 Problem Statement
+
+You have been given a **Binary Search Tree (BST)** of integers with **N nodes**. Your task is to convert it into a **Balanced BST** with the **minimum height** possible.
+
+A **Binary Search Tree (BST)** is a binary tree that follows these properties:
+
+* The **left subtree** of a node contains only nodes with data **less than** the node’s data.
+* The **right subtree** of a node contains only nodes with data **greater than** the node’s data.
+* Both the left and right subtrees must also be **binary search trees**.
+
+A **Balanced BST** is defined as a BST where the **height difference** between the left and right subtrees of every node is **at most 1**.
+
+---
+
+---
+
+### 🌐 Practice Links
+
+* 🔗 [LeetCode - Convert Sorted Array to Binary Search Tree](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)
+* 🔗 [Coding Ninjas - Normal BST To Balanced BST](https://www.codingninjas.com/studio/problems/normal-bst-to-balanced-bst_920472)
+* 🔗 [GeeksForGeeks - Convert Normal BST to Balanced BST](https://www.geeksforgeeks.org/convert-normal-bst-to-balanced-bst/)
+
+---
+
+### 🧠 Intuition
+
+The **inorder traversal** of a BST always gives elements in **sorted order**. So, if we perform an inorder traversal and store the elements, then construct a new BST from this sorted array, the resulting BST will automatically be **balanced** if we always pick the **middle element** as the root.
+
+---
+
+### 🖼️ Example
+
+**Original BST → Inorder Traversal → Balanced BST**
+
+![Normal BST](image-7.png)
+
+![Inorder Traversal](image-5.png)
+
+![Balanced BST](image-6.png)
+
+---
+
+### 💡 Approach
+
+1. **Perform Inorder Traversal**
+   Store all elements of BST in a sorted array (`inorderVal`).
+
+2. **Construct Balanced BST**
+   Use the sorted array to construct a new BST:
+
+   * Pick the **middle element** as the root.
+   * Recursively build **left** and **right** subtrees from the left and right halves of the array.
+
+3. **Return the new root.**
+
+---
+
+### 💻 C++ Code Implementation
+
+```cpp
+/*************************************************************
+    Following is the Binary Serach Tree node structure
+
+    template <typename T>
+    class TreeNode
+    {
+    public :
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~TreeNode() {
+            if (left)
+                delete left;
+            if (right)
+                delete right;
+        }
+    };
+
+/**************************************************************/
+// normal bst to balanced bst me karna hai, -> hme pta hai ek chiz ki normal bst ki inorder ya balanced bst ki inorder same hogi
+// sorted order me inorder ko  fark nhi fark nhi padta ki normal bst hai ya balanced bst 
+// toh kyu na inorder nikaal le given tree se aur uske baad inorder se bst bna le oo balanced bst hi bna kar de dega 
+
+
+void inorder(TreeNode<int>* root , vector<int> &inorderVal){
+    if(root==NULL){
+        return;
+    }
+    inorder(root->left , inorderVal);
+    inorderVal.push_back(root->data);
+    inorder(root->right , inorderVal);
+}
+TreeNode<int>* inorderToBst(int start , int end, vector<int>& inorderVal){
+   if(start>end){
+       return NULL;
+   }
+   int mid= (start+end)/2;
+
+   TreeNode<int>* root = new TreeNode<int>(inorderVal[mid]);
+   root->left = inorderToBst(start, mid-1,inorderVal);
+   root->right=  inorderToBst(mid+1 , end, inorderVal);
+
+   return root;
+}
+TreeNode<int>* balancedBst(TreeNode<int>* root) {
+    vector<int> inorderVal;
+    inorder(root ,inorderVal);
+
+    return inorderToBst(0, inorderVal.size()-1 , inorderVal);
+
+}
+```
+
+
+---
+
+### ⏱️ Time Complexity
+
+* **O(N)** — for inorder traversal to collect elements.
+* **O(N)** — for constructing a balanced BST from sorted array.
+* **Total:** `O(N)`
+
+### 🧮 Space Complexity
+
+* **O(N)** — to store inorder traversal.
+* **O(H)** — recursion stack (height of tree while constructing BST).
+
+
+### 🏁 Summary
+
+✅ Inorder traversal gives sorted elements.
+✅ Constructing BST using middle element ensures balance.
+✅ Efficient O(N) solution with O(H) extra space.
