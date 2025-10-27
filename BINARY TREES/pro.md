@@ -5,14 +5,39 @@ This collection contains common **binary tree problems** solved in **C++**, each
 
 ---
 
+# 🌲 Binary Tree Problem Set (C++)
+
+Welcome to the **Binary Tree Problem Set**! 🌿
+This collection contains common **binary tree problems** solved in **C++**, each with a clear approach, implementation code, time complexity, and a comprehensive list of practice links.
+
+---
+
 ## 📑 Table of Contents
 
-1. [🌳 Maximum Depth of Binary Tree](#1--maximum-depth-of-binary-tree)
-2. [🌿 Diameter of Binary Tree](#2--diameter-of-binary-tree)
-3. [🌴 Balanced Binary Tree](#3--balanced-binary-tree)
-4. [🌲 Identical Binary Trees](#4--identical-binary-trees)
-5. [🌰 Sum Tree Check](#5--sum-tree-check)
-6. [🌾 Zigzag Traversal](#6--zigzag-traversal)
+| No. | Problem Title | Type | Complexity | Practice Links (L, GFG, CN) |
+|:---:|:---------------------------------------------|:-------------|:----------:|:-------------------------------------------------------------------------------------------------------------|
+| 1️⃣ | 🌳 **Maximum Depth of Binary Tree** | Height | O(N) | [L: 104 / GFG / CN](#1-maximum-depth-of-binary-tree) |
+| 2️⃣ | 🌿 **Diameter of Binary Tree** | Distance | O(N) | [L: 543 / GFG / CN](#2-diameter-of-binary-tree) |
+| 3️⃣ | 🌴 **Balanced Binary Tree** | Property Check | O(N) | [L: 110 / GFG / CN](#3-balanced-binary-tree) |
+| 4️⃣ | 🌲 **Identical Binary Trees** | Comparison | O(N) | [L: 100 / GFG / CN](#4-identical-binary-trees) |
+| 5️⃣ | 🌰 **Sum Tree Check** | Property Check | O(N) | [GFG / CN](#5-sum-tree-check) |
+| 6️⃣ | 🌾 **Zigzag (Spiral) Traversal** | Traversal | O(N) | [L: 103 / GFG / CN](#6-zigzag-traversal) |
+| 7️⃣ | 3️⃣ **Inorder, Preorder, Postorder** | Traversal | O(N) | [Combined Traversal](#7-combined-traversal-inorder-preorder-postorder-in-one-traversal) |
+| 8️⃣ | 🚧 **Boundary Traversal** | Traversal | O(N) | [GFG / CN](#8-boundary-traversal) |
+| 9️⃣ | 📐 **Vertical Traversal** | Traversal | O(N log N) | [L: 987 / GFG / CN](#9-vertical-traversal) |
+| 🔟 | ⏫ **Top View** | View | O(N) | [GFG / CN](#10-top-view) |
+| 1️⃣1️⃣ | ⏬ **Bottom View** | View | O(N) | [GFG / CN](#11-bottom-view) |
+| 1️⃣2️⃣ | ⬅️ **Left View** | View | O(N) | [GFG / CN](#12-left-view) |
+| 1️⃣3️⃣ | ➡️ **Right View** | View | O(N) | [L: 199 / GFG / CN](#13-right-view) |
+| 1️⃣4️⃣ | 📏 **Longest Path Sum** | Path Query | O(N) | [GFG / CN](#14-sum-of-nodes-on-the-longest-path) |
+| 1️⃣5️⃣ | 🤝 **LCA (Lowest Common Ancestor)** | Path Query | O(N) | [L: 236 / GFG / CN](#15-lca-in-binary-tree) |
+| 1️⃣6️⃣ | 💰 **K Sum Paths** | Path Query | O(N) | [L: 437 / GFG / CN](#16-k-sum-paths) |
+| 1️⃣7️⃣ | 👴 **Kth Ancestor** | Path Query | O(N) | [GFG / CN](#17-kth-ancestor-in-a-tree) |
+| 1️⃣8️⃣ | ➕ **Maximum Non-Adjacent Sum** | DP on Tree | O(N) | [L: 337 / GFG / CN](#18-maximum-non-adjacent-nodes-sum) |
+| 1️⃣9️⃣ | 🔨 **Build from Inorder & Preorder** | Construction | O(N) | [L: 105 / GFG / CN](#19-construct-binary-tree-from-inorder-and-preorder) |
+| 2️⃣0️⃣ | 🔨 **Build from Inorder & Postorder** | Construction | O(N) | [L: 106 / GFG / CN](#20-construct-binary-tree-from-inorder-and-postorder) |
+
+---
 
 ---
 
