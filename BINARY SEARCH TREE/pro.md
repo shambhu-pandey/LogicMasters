@@ -187,7 +187,7 @@ int main(){
     cout << "Enter data to create BST (-1 to stop):" << endl;
     takeInput(root);
  
-    cout << "\nPrinting the BST using LEVEL ORDER TRAVERSAL:" << endl;
+    cout << "\nPrinting the BST using LEVEL ORDER TRAVERSAL:" <<   endl;
     levelOrderTraversal(root);
 
     cout << "\nPrinting INORDER traversal:" << endl;
