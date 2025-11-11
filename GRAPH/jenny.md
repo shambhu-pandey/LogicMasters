@@ -249,7 +249,6 @@ Breadth-First Search (BFS) is a graph traversal technique that explores nodes le
 - It explores all neighbors of a node before moving deeper.
 - Works for both connected and disconnected graphs (if run multiple times).
 
-```
 
 ---
 
@@ -446,72 +445,47 @@ DFS can be implemented using either a **stack** or **recursion**.
 ```cpp
 #include <iostream>
 #include <vector>
-#include <stack>
+#include <queue>
 using namespace std;
 
-// Function to perform DFS using a stack
-vector<int> dfs_stack(int start, vector<vector<int>>& adj, int N) {
-    vector<bool> visited(N, false); // Track visited nodes
-    vector<int> result;             // Store traversal order
-    stack<int> s;                   // Stack for DFS
-
-    visited[start] = true;         // Mark start node as visited
-    s.push(start);                 // Push start node to stack
-    result.push_back(start);       // Add start node to result
-
-    while (!s.empty()) {
-        int current = s.top();     // Look at top of stack
-        bool foundUnvisited = false;
-
-        // Check neighbors of current node
-        for (int neighbor : adj[current]) {
-            if (!visited[neighbor]) {
-                visited[neighbor] = true;     // Mark neighbor visited
-                s.push(neighbor);             // Push neighbor to stack
-                result.push_back(neighbor);   // Add to result
-                foundUnvisited = true;
-                break; // Go deeper only one level at a time
-            }
-        }
-
-        // If no unvisited neighbors, backtrack
-        if (!foundUnvisited) {
-            s.pop();
-        }
-    }
-
-    return result;
-}
-
 int main() {
-    int N, M;
-    cout << "Enter number of nodes: ";
-    cin >> N;
-    cout << "Enter number of edges: ";
-    cin >> M;
+    int n, m;
+    cout << "Enter number of nodes and edges: ";
+    cin >> n >> m;
 
-    vector<vector<int>> adj(N); // Adjacency list
-
-    cout << "Enter " << M << " edges (u v):\n";
-    for (int i = 0; i < M; i++) {
+    vector<vector<int>> adj(n);
+    cout << "Enter edges:\n";
+    for (int i = 0; i < m; i++) {
         int u, v;
         cin >> u >> v;
-        adj[u].push_back(v); // Directed edge
+        adj[u].push_back(v);
+        adj[v].push_back(u); // for undirected graph
     }
 
     int start;
-    cout << "Enter starting node for DFS: ";
+    cout << "Enter starting node: ";
     cin >> start;
 
-    vector<int> result = dfs_stack(start, adj, N);
+    vector<bool> visited(n, false);
+    queue<int> q;
+    q.push(start);
+    visited[start] = true;
 
-    cout << "\nDFS Traversal (Stack): ";
-    for (int val : result)
-        cout << val << " ";
-    cout << endl;
+    cout << "BFS Traversal: ";
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        cout << node << " ";
 
-    return 0;
+        for (int next : adj[node]) {
+            if (!visited[next]) {
+                visited[next] = true;
+                q.push(next);
+            }
+        }
+    }
 }
+
 ```
 
 ---
@@ -535,70 +509,57 @@ int main() {
 ```cpp
 #include <iostream>
 #include <vector>
+#include <stack>
 using namespace std;
 
-// Recursive DFS function
-void dfs_recursive(int node, vector<vector<int>>& adj, vector<bool>& visited, vector<int>& result) {
-    visited[node] = true;         // Mark current node as visited
-    result.push_back(node);       // Add node to result
+int main() {
+    int n, m;
+    cout << "Enter number of nodes and edges: ";
+    cin >> n >> m;
 
-    // Visit all unvisited neighbors
-    for (int neighbor : adj[node]) {
-        if (!visited[neighbor]) {
-            dfs_recursive(neighbor, adj, visited, result);
+    vector<vector<int>> adj(n);
+    cout << "Enter edges:\n";
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u); // for undirected graph
+    }
+
+    int start;
+    cout << "Enter starting node: ";
+    cin >> start;
+
+    vector<bool> visited(n, false);
+    stack<int> st;
+    st.push(start);
+
+    cout << "DFS Traversal: ";
+    while (!st.empty()) {
+        int node = st.top();
+        st.pop();
+
+        if (!visited[node]) {
+            visited[node] = true;
+            cout << node << " ";
+
+            // Push all neighbors (in reverse order for correct sequence)
+            for (int i = adj[node].size() - 1; i >= 0; i--) {
+                int next = adj[node][i];
+                if (!visited[next])
+                    st.push(next);
+            }
         }
     }
 }
 
-int main() {
-    int N, M;
-    cout << "Enter number of nodes: ";
-    cin >> N;
-    cout << "Enter number of edges: ";
-    cin >> M;
-
-    vector<vector<int>> adj(N); // Adjacency list
-
-    cout << "Enter " << M << " edges (u v):\n";
-    for (int i = 0; i < M; i++) {
-        int u, v;
-        cin >> u >> v;
-        adj[u].push_back(v); // Directed edge
-    }
-
-    int start;
-    cout << "Enter starting node for DFS: ";
-    cin >> start;
-
-    vector<bool> visited(N, false); // Track visited nodes
-    vector<int> result;             // Store traversal order
-
-    dfs_recursive(start, adj, visited, result);
-
-    cout << "\nDFS Traversal (Recursive): ";
-    for (int val : result)
-        cout << val << " ";
-    cout << endl;
-
-    return 0;
-}
-```
 
 ---
 
 ## 🧪 Sample Input
 
 ```
-Enter number of nodes: 7
-Enter number of edges: 6
-Enter edges:
-0 1
-0 4
-1 3
-3 2
-2 6
-2 5
-Enter starting node for DFS: 0
+![alt text](image-55.png)
 ```
 
 ---
@@ -959,6 +920,125 @@ property : n-1= edges  in kruskal
 
 
 ---
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int find(int x, vector<int>& parent) {
+    if (parent[x] == x) return x;
+    return parent[x] = find(parent[x], parent);
+}
+
+void unite(int a, int b, vector<int>& parent) {
+    a = find(a, parent);
+    b = find(b, parent);
+    if (a != b) parent[b] = a;
+}
+
+int main() {
+    int n, m;
+    cout << "Enter nodes and edges: ";
+    cin >> n >> m;
+
+    vector<vector<int>> edges(m);
+    cout << "Enter edges (u v w):\n";
+    for (int i = 0; i < m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        edges[i] = {w, u, v}; // sort by weight
+    }
+
+    sort(edges.begin(), edges.end());
+    vector<int> parent(n);
+    for (int i = 0; i < n; i++) parent[i] = i;
+
+    int cost = 0;
+    cout << "\nEdges in MST:\n";
+    for (auto e : edges) {
+        int w = e[0], u = e[1], v = e[2];
+        if (find(u, parent) != find(v, parent)) {
+            unite(u, v, parent);
+            cost += w;
+            cout << u << " - " << v << " (" << w << ")\n";
+        }
+    }
+    cout << "Total Cost: " << cost << endl;
+}
+```
+![alt text](image-57.png)
+
+![alt text](image-56.png)
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <map>
+using namespace std;
+
+int find(int x, vector<int>& parent) {
+    if (parent[x] == x) return x;
+    return parent[x] = find(parent[x], parent);
+}
+
+void unite(int a, int b, vector<int>& parent) {
+    a = find(a, parent);
+    b = find(b, parent);
+    if (a != b) parent[b] = a;
+}
+
+int main() {
+    int n, m;
+    cout << "Enter number of nodes and edges: ";
+    cin >> n >> m;
+
+    vector<vector<int>> edges(m); // edges as {weight, u_index, v_index}
+    map<char, int> charToIndex;   // map chars to integers
+    map<int, char> indexToChar;   // map integers back to chars
+    int idx = 0;
+
+    cout << "Enter edges (u v w) with nodes as characters:\n";
+    for (int i = 0; i < m; i++) {
+        char u, v;
+        int w;
+        cin >> u >> v >> w;
+
+        if (charToIndex.find(u) == charToIndex.end()) {
+            charToIndex[u] = idx;
+            indexToChar[idx] = u;
+            idx++;
+        }
+        if (charToIndex.find(v) == charToIndex.end()) {
+            charToIndex[v] = idx;
+            indexToChar[idx] = v;
+            idx++;
+        }
+
+        edges[i] = {w, charToIndex[u], charToIndex[v]}; // store indices
+    }
+
+    sort(edges.begin(), edges.end());
+
+    vector<int> parent(n);
+    for (int i = 0; i < n; i++) parent[i] = i;
+
+    int cost = 0;
+    cout << "\nEdges in MST:\n";
+    for (auto e : edges) {
+        int w = e[0], u = e[1], v = e[2];
+        if (find(u, parent) != find(v, parent)) {
+            unite(u, v, parent);
+            cost += w;
+            cout << indexToChar[u] << " - " << indexToChar[v] << " (" << w << ")\n";
+        }
+    }
+
+    cout << "Total Cost: " << cost << endl;
+}
+```
+![alt text](image-58.png)
 
 ## 🌳 **What is Prim’s Algorithm?**
 
@@ -1220,3 +1300,115 @@ Would you like me to show a **dry run table** for Dijkstra’s algorithm on anot
   ![alt text](image-52.png)
   ![alt text](image-53.png)
   ![alt text](image-54.png)
+  
+  ```cpp
+#include <iostream>
+#include <vector>
+#include <climits>
+using namespace std;
+
+int main() {
+    int n, m;
+    cout << "Enter number of nodes and edges: ";
+    cin >> n >> m;
+
+    vector<vector<pair<int,int>>> adj(n); // adjacency list: {neighbor, weight}
+
+    cout << "Enter edges (u v w) with 0-based nodes:\n";
+    for (int i = 0; i < m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w}); // for undirected graph
+    }
+
+    int src;
+    cout << "Enter source node (0 to " << n-1 << "): ";
+    cin >> src;
+
+    vector<int> dist(n, INT_MAX); // distance from source
+    vector<bool> visited(n, false);
+    dist[src] = 0;
+
+    for (int i = 0; i < n; i++) {
+        // find the unvisited node with minimum distance
+        int u = -1;
+        for (int j = 0; j < n; j++)
+            if (!visited[j] && (u == -1 || dist[j] < dist[u]))
+                u = j;
+
+        if (dist[u] == INT_MAX) break; // remaining nodes are unreachable
+        visited[u] = true;
+
+        // update distances of neighbors
+        for (auto edge : adj[u]) {
+            int v = edge.first, w = edge.second;
+            if (dist[u] + w < dist[v])
+                dist[v] = dist[u] + w;
+        }
+    }
+
+    cout << "\nShortest distances from node " << src << ":\n";
+    for (int i = 0; i < n; i++)
+        cout << "Node " << i << ": " << dist[i] << endl;
+}
+```
+  ![alt text](image-59.png)
+  ![alt text](image-60.png)
+
+  ```cpp
+  #include <iostream>
+#include <vector>
+#include <climits>
+#include <map>
+using namespace std;
+
+int main() {
+    int n, m, idx = 0;
+    cout << "Enter number of nodes and edges: ";
+    cin >> n >> m;
+
+    map<char,int> c2i; // char to index
+    map<int,char> i2c; // index to char
+    vector<vector<pair<int,int>>> adj(n); // adjacency list
+
+    cout << "Enter edges (u v w) with nodes as characters:\n";
+    for(int i = 0; i < m; i++){
+        char u, v; int w;
+        cin >> u >> v >> w;
+        if(!c2i.count(u)) c2i[u] = idx, i2c[idx] = u, idx++;
+        if(!c2i.count(v)) c2i[v] = idx, i2c[idx] = v, idx++;
+        adj[c2i[u]].push_back({c2i[v], w});
+        adj[c2i[v]].push_back({c2i[u], w}); // remove if directed
+    }
+
+    char srcChar;
+    cout << "Enter source node: ";
+    cin >> srcChar;
+    int src = c2i[srcChar];
+
+    vector<int> dist(n, INT_MAX);
+    vector<bool> visited(n, false);
+    dist[src] = 0;
+
+    for(int i = 0; i < n; i++){
+        int u = -1;
+        for(int j = 0; j < n; j++)
+            if(!visited[j] && (u == -1 || dist[j] < dist[u]))
+                u = j;
+
+        if(dist[u] == INT_MAX) break;
+        visited[u] = true;
+
+        for(auto edge: adj[u]){
+            int v = edge.first, w = edge.second;
+            if(dist[u] + w < dist[v]) dist[v] = dist[u] + w;
+        }
+    }
+
+    cout << "\nShortest distances from node " << srcChar << ":\n";
+    for(int i = 0; i < n; i++)
+        cout << i2c[i] << ": " << dist[i] << endl;
+}
+```
+![alt text](image-61.png)
