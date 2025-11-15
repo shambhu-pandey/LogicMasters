@@ -1412,3 +1412,981 @@ int main() {
 }
 ```
 ![alt text](image-61.png)
+
+
+
+![alt text](image-62.png)
+
+# ⭐ **Cycle Detection in Undirected Graph using BFS and Flag Method (−1, 0, 1)**
+
+*(8 Marks – Perfect Exam Format)*
+
+To detect a cycle in an undirected graph, we can perform a **Breadth-First Search (BFS)** and maintain a **flag array** for each vertex.
+Each vertex is assigned one of the following values:
+
+### **Flag Values**
+
+* **−1 → Not Visited**
+* **0 → In Queue / Processing**
+* **1 → Fully Visited**
+
+---
+
+## **Algorithm**
+
+### **Step 1: Initialization**
+
+1. For every vertex `v` in the graph:
+   `flag[v] = −1`
+2. Choose any vertex `s` as the starting point.
+3. Set `flag[s] = 0` and insert `s` into the BFS queue.
+
+---
+
+### **Step 2: BFS Traversal**
+
+While the queue is not empty:
+
+1. Remove the front vertex `u` from the queue.
+2. Set `flag[u] = 1` (fully visited).
+3. For every adjacent vertex `v` of `u`:
+
+   * **Case 1: `flag[v] = −1`**
+     → `v` is unvisited.
+     → Set `flag[v] = 0` and push `v` into the queue.
+   * **Case 2: `flag[v] = 0`**
+     → `v` is already in queue (still processing).
+     → This means another edge is pointing to a processing vertex.
+     → **A cycle is detected.**
+
+---
+
+### ⭐ **Cycle Detection Condition**
+
+> **If any vertex finds its adjacent vertex with `flag = 0`,
+> then the graph contains a cycle.**
+
+This is the key rule of the flag method.
+
+---
+
+### **Step 3: Final Decision**
+
+* If at any point an adjacent vertex with `flag = 0` is found → **Cycle Exists**
+* If BFS finishes without this condition → **No Cycle**
+
+---
+
+## **Reason Behind the Method**
+
+* A vertex with **flag = 0** is still being explored.
+* If another vertex again reaches this same “processing” vertex, it indicates a **back-edge**, which forms a **cycle** in an undirected graph.
+
+---
+
+## **Conclusion**
+
+The BFS flag method provides a simple and effective way to detect cycles in an undirected graph by using three states (−1, 0, 1).
+If during BFS we encounter an adjacent vertex with flag value **0**, a cycle is present in the graph.
+
+---
+
+
+Here is the **perfect 8-marks exam answer** for
+**Cycle Detection in an Undirected Graph using DFS and Flag Method (−1, 0, 1)**—clear, neat and exactly in exam-ready style.
+
+---
+
+# ⭐ **Cycle Detection in Undirected Graph Using DFS and Flag Method (−1, 0, 1)**
+
+*(8 Marks – Proper Exam Format)*
+
+To detect a cycle in an undirected graph using **Depth First Search (DFS)**, we maintain a **flag array** to track the state of every vertex.
+Each vertex is assigned one of the three values:
+
+### **Flag Values**
+
+* **−1 → Not Visited**
+* **0  → Currently in DFS (Processing)**
+* **1  → Completely Visited**
+
+---
+
+# ✅ **Algorithm (DFS Method)**
+
+### **Step 1: Initialization**
+
+1. For every vertex `v` in the graph, set
+   `flag[v] = −1`
+2. Choose any vertex `s` to start DFS.
+
+---
+
+### **Step 2: DFS Traversal**
+
+Call `DFS(s)` where:
+
+### **DFS(u):**
+
+1. Set
+   `flag[u] = 0`   (u is being processed)
+2. For every adjacent vertex `v` of `u`:
+
+   * **Case 1: `flag[v] = −1`**
+     → `v` is unvisited
+     → Call `DFS(v)`
+     → If DFS(v) returns TRUE → cycle exists
+   * **Case 2: `flag[v] = 0`**
+     → `v` is in processing state
+     → DFS found a back-edge
+     → **Cycle Exists**
+   * **Case 3: `flag[v] = 1`**
+     → `v` is already completely visited
+     → Ignore
+3. After all neighbors are explored, set
+   `flag[u] = 1`
+
+---
+
+# ⭐ **Main Cycle Detection Condition**
+
+> **If during DFS, any vertex finds an adjacent vertex with `flag = 0`,
+> then the graph contains a cycle.**
+
+This indicates the presence of a **back-edge**, which forms a cycle in an undirected graph.
+
+---
+
+### **Step 3: Final Decision**
+
+* If DFS detects any adjacent vertex with `flag = 0` → **Cycle Exists**
+* If DFS completes for all components with no such case → **No Cycle**
+
+---
+
+# 🧠 **Why This Works?**
+
+* `flag = 0` means the vertex is currently active in the DFS path.
+* If another neighbor points to this “active” vertex,
+  it means that the graph has returned to a vertex in the same DFS path →
+  **This forms a cycle.**
+
+---
+
+# 📌 **Conclusion**
+
+Using DFS with the flag method (−1, 0, 1),
+a cycle in an undirected graph is detected when a vertex explores an adjacent vertex that is currently in the processing state (flag = 0).
+This method is accurate, simple, and commonly asked in exams.
+
+---
+
+# ⭐ Cycle Detection in Directed Graph Using DFS and Flag Method (−1, 0, 1)
+
+
+![alt text](image-63.png)
+## C se ab khi nhi ja sakte so ab backtrack , ab backtrack kaise karenge ki stack waale top element ko remove kar denge stack se 
+![alt text](image-65.png)
+![alt text](image-66.png)
+![alt text](image-67.png)
+##  E se toh hm ja sakte hai b par but already 0(zero) hai toh nhi le sakte means cycle formed 
+![alt text](image-68.png)
+## remove B->E edge and then check 
+![alt text](image-69.png)
+### and then check adjacent vertex of e , if nothing then backtrack and change it from 0 to 1 , and remove from stack
+![alt text](image-70.png)
+### do above step for others
+![alt text](image-71.png)
+### no cycle found for this 
+
+
+---
+
+In a **directed graph**, a cycle exists when we revisit a node that is already in the **current DFS path**.
+This can be detected using **DFS** and a **flag array** that stores the state of each vertex.
+
+---
+
+# 🔷 **Flag Values**
+
+Each vertex is assigned one of the following:
+
+| Flag   | Meaning                                       |
+| ------ | --------------------------------------------- |
+| **−1** | Not Visited                                   |
+| **0**  | Currently in DFS (Present in recursion stack) |
+| **1**  | Fully Visited                                 |
+
+---
+
+# 🔶 **Algorithm (DFS Method)**
+
+### **Step 1: Initialization**
+
+1. For every vertex `v` in the graph:
+   `flag[v] = −1`
+2. For each vertex `v`:
+   If `flag[v] = −1`, call `DFS(v)`
+
+---
+
+### **Step 2: DFS(u)**
+
+1. Set
+   `flag[u] = 0`
+   (u is now in the DFS recursion stack)
+
+2. For every adjacent vertex `v` of `u`:
+
+   * **Case 1: `flag[v] = −1`**
+     → `v` is unvisited
+     → Call `DFS(v)`
+     → If DFS(v) returns TRUE → cycle exists
+
+   * **Case 2: `flag[v] = 0`**
+     → `v` is already in DFS recursion stack
+     → A **back edge** is found
+     → **Cycle Exists**
+
+   * **Case 3: `flag[v] = 1`**
+     → `v` is already fully processed
+     → Ignore
+
+3. After exploring all neighbors of `u`, set
+   `flag[u] = 1`
+   (u is completely visited and removed from recursion stack)
+
+---
+
+# ⭐ **Main Condition for Cycle**
+
+> **If during DFS, a vertex reaches an adjacent vertex whose flag is `0`, then the directed graph contains a cycle.**
+
+This indicates a **back-edge**, which is the definition of a cycle in a directed graph.
+
+---
+
+# 🔷 **Step 3: Final Answer**
+
+* If DFS reports any `flag = 0` case → **Cycle Exists**
+* If DFS finishes all components with no such case → **No Cycle**
+
+---
+
+# 🧠 **Why This Works?**
+
+In a directed graph:
+
+* `flag = 0` means the vertex is currently on the **DFS call stack** (part of the active path).
+* If a vertex points back to another vertex in the same active path → **cycle**.
+
+This method is also known as **DFS with recursion-stack detection**.
+
+---
+
+# 📌 **Conclusion**
+
+Cycle detection in a directed graph is done using DFS and flag states (−1, 0, 1).
+A cycle is present if DFS encounters a vertex with **flag = 0**, meaning a back-edge has been discovered.
+This is the simplest and most reliable technique used for detecting cycles in directed graphs.
+
+---
+
+
+# ⭐ **Topological Sorting – In-Degree Method (Kahn’s Algorithm)**
+
+  ![alt text](image-72.png)
+  ## cycle should not be formed DAG
+  ## assign in degree to each node , and start from which has 0(zero) indegree and delete link bw  from that 0 node  , and then repeat step for other 
+  ## two topological sorting we got
+  ![alt text](image-73.png)
+
+  ## question 2:
+  ![alt text](image-74.png)
+  ## sol: we can not find topological order for this because cycle formed 
+  ## se why we can not find topological order  for cycle 
+  ![alt text](image-75.png)
+
+## questions 3 👍
+ ![alt text](image-76.png)
+
+
+
+
+
+*(Same method as shown in your image)*
+
+This method works ONLY for **Directed Acyclic Graphs (DAGs)**.
+
+---
+
+# 🔷 **Step 1: Find In-Degree of Every Node**
+
+**In-degree** = number of incoming edges.
+
+Using the graph in your screenshot:
+
+Edges (example):
+
+```
+1 → 2
+1 → 4
+2 → 3
+4 → 3
+4 → 5
+```
+
+Now compute in-degree:
+
+| Node | In-degree |
+| ---- | --------- |
+| 1    | 0         |
+| 2    | 1         |
+| 3    | 2         |
+| 4    | 1         |
+| 5    | 1         |
+
+Nodes with **in-degree 0** → can be picked first.
+
+Here: **1**
+
+---
+
+# 🔷 **Step 2: Pick Node With In-degree 0**
+
+Pick **1** first (it has 0 incoming edges).
+
+Write it in the output →
+**Output: 1**
+
+Now **remove node 1** and all its outgoing edges.
+
+Edges removed:
+
+```
+1 → 2
+1 → 4
+```
+
+Update the in-degree table:
+
+| Node | Old In-degree | New In-degree |
+| ---- | ------------- | ------------- |
+| 2    | 1             | 0             |
+| 4    | 1             | 0             |
+
+Now nodes with **0 in-degree** are:
+→ **2** and **4**
+
+---
+
+# 🔷 **Step 3: Pick Any Node with In-degree 0**
+
+Pick **2** next.
+
+Output:
+**1 2**
+
+Remove outgoing edges of node 2:
+
+```
+2 → 3
+```
+
+Update in-degrees:
+
+| Node | Old | New |
+| ---- | --- | --- |
+| 3    | 2   | 1   |
+
+Remaining nodes with 0 in-degree:
+→ **4**
+
+---
+
+# 🔷 **Step 4: Pick Next Zero In-degree Node**
+
+Pick **4**
+
+Output:
+**1 2 4**
+
+Remove edges of node 4:
+
+```
+4 → 3
+4 → 5
+```
+
+Update in-degree:
+
+| Node | Old | New |
+| ---- | --- | --- |
+| 3    | 1   | 0   |
+| 5    | 1   | 0   |
+
+Nodes with 0 in-degree now:
+→ **3** and **5**
+
+---
+
+# 🔷 **Step 5: Pick Next Zero In-degree**
+
+Pick either **3** or **5**.
+
+Two possible valid outputs:
+
+```
+1 2 4 3 5
+1 2 4 5 3
+```
+
+Both are correct.
+
+---
+
+# ⭐ **Final Topological Sort Output**
+
+Exactly like in your image:
+
+```
+1 2 4 3 5
+1 2 4 5 3
+```
+
+---
+
+# 🧠 **Why does this method work?**
+
+* A node with **0 in-degree** has **NO dependencies**, so it must come first.
+* Removing its outgoing edges may produce new nodes with **0 in-degree**.
+* Continue until all nodes are removed.
+
+If at any point **no node has 0 in-degree** but graph still has nodes → **Cycle exists** (topological sorting not possible).
+
+---
+
+
+# ⭐ **Algorithm: Topological Sorting Using In-Degree Method (Kahn’s Algorithm)**
+
+*(Perfect for exam writing)*
+
+### **Input:** A Directed Acyclic Graph (DAG)
+
+### **Output:** A topological ordering of all vertices
+
+---
+
+## 🔶 **Algorithm Steps**
+
+1. **Compute in-degree** for every vertex in the graph.
+   (In-degree = number of incoming edges)
+
+2. **Insert all vertices** with in-degree = 0 into a queue.
+
+3. **Repeat until the queue becomes empty:**
+
+   * Remove a vertex `u` from the queue.
+   * Add `u` to the topological order list.
+   * For every adjacent vertex `v` of `u`:
+
+     * Reduce `in-degree[v]` by 1
+     * If `in-degree[v]` becomes 0, insert `v` into the queue
+
+4. After processing all vertices:
+
+   * If the topological order contains **all vertices**,
+     → a valid topological sorting exists
+   * Otherwise, if some vertices are left
+     → graph contains a **cycle** (topological sorting not possible)
+
+---
+
+### ⭐ **Important Note for Exam**
+
+> Topological sorting is applicable **only for Directed Acyclic Graphs (DAGs)**.
+> If any cycle exists, no node will reach in-degree 0 → algorithm detects cycle.
+
+---
+
+
+
+
+# ⭐ **Connected Components in a Graph**
+
+![alt text](image-77.png)
+![alt text](image-78.png)
+
+---
+
+
+
+A **connected component** of an undirected graph is a **set of vertices** such that:
+
+* Every vertex is reachable from every other vertex in the same set
+* No vertex in this group is connected to vertices outside the group
+
+In simple words:
+
+> A connected component is a “group of nodes that are connected to each other.”
+
+---
+
+# 📌 **Example**
+
+```
+(1)---(2)---(3)
+
+(4)---(5)
+
+(6)
+```
+
+Connected components:
+
+* Component 1 → {1, 2, 3}
+* Component 2 → {4, 5}
+* Component 3 → {6}
+
+So the graph has **3 connected components**.
+
+---
+
+# ⭐ **Why Find Connected Components?**
+
+* To identify how many separate groups exist
+* Used in networks, social media clusters, image segmentation
+* Helps determine whether a graph is fully connected
+
+---
+
+# 🔶 **Algorithm for Connected Components Using DFS**
+
+*(Correct version with count incremented after DFS call)*
+
+### **Input:** Undirected graph
+
+### **Output:** Number of connected components
+
+---
+
+## **Algorithm (DFS Method)**
+
+1. Mark all vertices as **unvisited**.
+2. Initialize `component_count = 0`.
+3. For each vertex `v` in the graph:
+
+   * If `v` is **unvisited**:
+
+     * Call **DFS(v)** to visit all nodes reachable from `v`
+     * **After DFS completes**, increment
+       `component_count = component_count + 1`
+4. DFS(v):
+
+   * Mark `v` as visited
+   * For each adjacent vertex `u`:
+
+     * If `u` is unvisited → call DFS(u)
+5. After checking all vertices,
+   **`component_count` is the total number of connected components.**
+
+---
+
+# 🔷 **Algorithm for Connected Components Using BFS**
+
+1. Mark all vertices as unvisited
+2. Set `component_count = 0`
+3. For each vertex `v`:
+
+   * If `v` is **unvisited**:
+
+     * Push `v` into a queue
+     * While queue is not empty:
+
+       * Pop a node and mark it visited
+       * Push all unvisited neighbors
+     * **After BFS finishes**, increment
+       `component_count++`
+4. Return `component_count`
+
+---
+
+# ⭐ **Important Points**
+
+* Works only for **undirected graphs**
+  (Directed graphs use **Strongly Connected Components – SCC**)
+* Each DFS/BFS call completely covers **one component**
+* Total connected components = **number of DFS/BFS calls**
+
+---
+
+# 🎯 **One-Line Summary**
+
+> A connected component is a maximal group of vertices reachable from each other.
+> The number of connected components equals the number of times DFS/BFS is started on an unvisited vertex.
+
+---
+
+# ⭐ **Bridges (Cut Edges) in a Graph**
+
+
+![alt text](image-79.png)
+![alt text](image-80.png)
+Here is a **perfect, clear, exam-ready explanation** of
+**Bridges (Cut Edges) in a Graph** + **Algorithm (Tarjan’s Algorithm)** using DFS.
+
+This is exactly what you need for 5–10 marks.
+
+---
+
+A **bridge** (also called a **cut edge**) in an undirected graph is an edge whose **removal increases the number of connected components**.
+
+In simple words:
+
+> A bridge is an edge that, if removed, will disconnect part of the graph.
+
+---
+
+# 📌 **Example**
+
+Graph:
+
+```
+1 --- 2 --- 3
+      |
+      4
+```
+
+Bridges:
+
+* (2,1)
+* (2,3)
+* (2,4)
+
+Because removing any of these edges will increase the number of components.
+
+---
+
+# ⭐ **Why are Bridges Important?**
+
+* Network design reliability
+* Finding weak links in communication networks
+* Identifying vulnerabilities in roads/power networks
+* Used in articulation point/bridge algorithms
+
+---
+
+# 🔥 **Key Concepts Used to Find Bridges**
+
+We use **DFS + 2 arrays**:
+
+### 1️⃣ **disc[v]**
+
+* Discovery time of vertex v
+* (When v is first visited in DFS)
+
+### 2️⃣ **low[v]**
+
+* The **lowest discovery time** reachable from v
+* Using:
+
+  * DFS tree edges
+  * Back edges
+
+---
+
+# 🧠 **Condition for Bridge**
+
+> **An edge (u, v) is a bridge if:**
+> `low[v] > disc[u]`
+
+Meaning:
+
+* v **cannot reach** u or any of u's ancestors through back edges
+  → Therefore removing (u, v) breaks the graph.
+
+---
+
+# ⭐ **Algorithm: Find All Bridges (Tarjan’s Algorithm)**
+
+*(DFS-based)*
+**Input:** Undirected graph
+**Output:** Allbridge edges
+
+---
+
+## ✔️ **Algorithm Steps**
+
+1. Initialize arrays:
+
+   * `visited[] = false`
+   * `disc[] = -1`
+   * `low[] = -1`
+   * `time = 0`
+2. For each vertex `v`:
+
+   * If not visited:
+
+     * Call **DFS(v, parent = -1)**
+
+---
+
+## ✔️ **DFS(u, parent)**
+
+1. Mark `u` as visited
+2. Set:
+
+   * `disc[u] = low[u] = ++time`
+3. For every adjacent vertex `v` of `u`:
+
+   ### Case 1: `v` is parent of `u`
+
+   * Ignore (continue)
+
+   ### Case 2: `v` is NOT visited
+
+   * Call DFS(v, u)
+   * After return:
+
+     * Update:
+       `low[u] = min(low[u], low[v])`
+     * **Bridge condition:**
+       If `low[v] > disc[u]`
+       → Edge (u, v) is a **bridge**
+
+   ### Case 3: `v` is visited (Back Edge)
+
+   * Update low[u]:
+     `low[u] = min(low[u], disc[v])`
+
+---
+
+# 📌 **Bridge Condition Explained**
+
+If:
+
+```
+low[v] > disc[u]
+```
+
+It means:
+
+* v and its subtree cannot reach u or its ancestors
+* So (u, v) is a crucial connection
+* Removing it breaks the graph
+  → Hence (u, v) is a **bridge**
+
+---
+
+# ⭐ **Example to Understand**
+
+Graph:
+
+```
+1---2---3
+    |
+    4
+```
+
+DFS Order:
+
+* disc[]: 1,2,3,4
+* low[]: 1,2,3,2
+
+Check edges:
+
+* (2,1): low[2] = 2 > disc[1] = 1 → Bridge
+* (2,3): low[3] = 3 > disc[2] = 2 → Bridge
+* (2,4): low[4] = 4 > disc[2] = 2 → Bridge
+
+So all these edges are bridges.
+
+---
+
+# ⭐ **Important Points**
+
+* Works only on **undirected graphs**
+* Uses **DFS + low-link values**
+* Time Complexity: **O(V + E)**
+* Tarjan’s Algorithm is used for:
+
+  * Bridges
+  * Articulation points
+  * Strongly connected components (directed)
+
+---
+
+# 🎯 **One-Line Summary**
+
+> A bridge is an edge whose removal disconnects the graph.
+> It is found using DFS: edge (u, v) is a bridge if **low[v] > disc[u]**.
+
+---
+
+----
+
+# ⭐ **Bellman–Ford Algorithm (Single Source Shortest Path)**
+
+## negative weight edge par yhi shi se kaam karega 
+![alt text](image-81.png)
+![alt text](image-82.png)
+![alt text](image-83.png)
+## in third operation no change so over here only 
+![alt text](image-84.png)
+## shortest distance 
+![alt text](image-85.png)
+## time conplexity for complete graph n^3
+![alt text](image-86.png)
+
+## questions 2: its not work properly when negative cycle formed 
+![alt text](image-87.png)
+![alt text](image-88.png)
+![alt text](image-89.png)
+![alt text](image-90.png)
+## according to bellman ford we need to (vertex-1) iteration , so we need only 3 iteration for this question but we do 4th iteration then it should not be change the shortest path but  in this case it  changes so that we can say negative weight cycle formed  
+![alt text](image-91.png)
+
+---
+
+Here is your **full combined Bellman–Ford explanation WITH the properly written algorithm inserted inside**, clean and exam-ready.
+
+---
+
+# ⭐ **Bellman–Ford Algorithm — Single Source Shortest Path**
+
+The **Bellman–Ford Algorithm** is used to find the **shortest path** from a **single source vertex** to **all other vertices** in a **weighted graph**.
+
+Unlike Dijkstra’s Algorithm:
+
+✔ Bellman-Ford **can handle negative edge weights**
+✔ It can **detect negative weight cycles**
+
+---
+
+# ⭐ **Where Bellman–Ford is Used?**
+
+* Graphs with **negative weights**
+* Detecting **negative weight cycles**
+* Financial graphs (profit-loss edges)
+* Computer networks
+
+---
+
+# 🔶 **Works On**
+
+| Graph Type       | Supported                                |
+| ---------------- | ---------------------------------------- |
+| Directed         | ✔ Yes                                    |
+| Undirected       | ✔ Yes (*convert to directed pair edges*) |
+| Negative Weights | ✔ Yes                                    |
+| Negative Cycles  | ✔ Detectable                             |
+
+---
+
+# ⭐ **Key Idea**
+
+Bellman–Ford repeatedly **relaxes** (updates) all edges.
+
+### **Relaxation Rule:**
+
+For an edge **u → v** with weight **w**:
+
+```
+if dist[u] + w < dist[v]:
+      dist[v] = dist[u] + w
+```
+
+Relaxation tries to improve the shortest path.
+
+---
+
+# ⭐ **Algorithm (Proper Exam-Ready Format)**
+
+*(No code — Pure Algorithm)*
+
+### **Input:**
+
+Graph with `V` vertices and `E` edges, and a source vertex `S`.
+
+### **Output:**
+
+Shortest distance from source to all vertices or detection of a negative weight cycle.
+
+---
+
+## ✔️ **Step 1 — Initialization**
+
+For every vertex `v`:
+
+* Set `dist[v] = ∞`
+
+Set:
+
+* `dist[S] = 0`
+
+---
+
+## ✔️ **Step 2 — Relax All Edges (V − 1 times)**
+
+Repeat the following process exactly **(V − 1)** times:
+
+For each edge `(u, v, w)`:
+
+* If `dist[u] + w < dist[v]`, then update:
+
+  * `dist[v] = dist[u] + w`
+
+This step allows all shortest paths (with at most V−1 edges) to be found.
+
+---
+
+## ✔️ **Step 3 — Check for Negative Weight Cycle**
+
+For every edge `(u, v, w)`:
+
+* If `dist[u] + w < dist[v]`, then:
+
+  * A **negative weight cycle exists**
+  * Shortest paths are not valid
+
+---
+
+## ✔️ **Step 4 — Output**
+
+If no negative cycle is detected, output the final shortest distance values.
+
+---
+
+# ⭐ **Why (V − 1) Relaxations?**
+
+In a graph with **V** vertices, the longest possible shortest path contains **V−1 edges**.
+Therefore, relaxing all edges V−1 times guarantees the shortest paths are found.
+
+---
+
+# ⭐ **Time Complexity**
+
+```
+O(V × E)
+```
+
+Slower than Dijkstra, but works with **negative edges**.
+
+---
+
+---
+
+# ⭐ **Important Properties**
+
+* Handles **negative weights**
+* Detects **negative cycles**
+* Works for **directed and undirected** graphs
+  (undirected edges must be added twice)
+
+---
+
+# 🎯 **One-Line Summary (Exam)**
+
+> Bellman–Ford finds the shortest path from a single source by relaxing all edges (V−1 times) and detects negative cycles by checking if any distance can still be improved.
+
+---
