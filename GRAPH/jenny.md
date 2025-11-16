@@ -2390,3 +2390,365 @@ Slower than Dijkstra, but works with **negative edges**.
 > Bellman–Ford finds the shortest path from a single source by relaxing all edges (V−1 times) and detects negative cycles by checking if any distance can still be improved.
 
 ---
+
+
+
+⭐ Algorithm: N–Queen Problem (Backtracking)
+
+![alt text](image-92.png)
+
+![alt text](image-93.png)
+![alt text](image-94.png)
+
+
+---
+
+
+# ⭐ **Idea of the N–Queen Problem (in words)**
+
+The idea of the N–Queen problem is to place **N queens** on an **N × N chessboard** in such a way that **no two queens attack each other**.
+A queen can attack another queen if they are placed in the **same row, same column, or on the same diagonal**.
+
+To solve the problem, we use **backtracking**:
+
+* We place **one queen in each row**.
+* For every row, we try all columns **one by one**.
+* Before placing a queen, we check whether that position is **safe**.
+* If the position is safe, we place the queen and move to the next row.
+* If later we get stuck (no safe place), we **remove the queen** (backtrack) and try another column.
+* If we manage to place queens in all rows, then we have a **valid solution**.
+
+Backtracking explores all possibilities and only keeps the valid ones.
+
+---
+
+# ⭐ **Algorithm of N–Queen Problem (Written in Words)**
+
+1. Start with an empty N × N chessboard.
+2. Begin placing queens from the **first row**.
+3. For the current row, try placing the queen in **each column**, one after another.
+4. For each attempted position:
+
+   * Check if placing a queen here is **safe**.
+   * A position is safe if:
+
+     * No other queen is in the **same column** above.
+     * No other queen is in the **left diagonal** above.
+     * No other queen is in the **right diagonal** above.
+5. If the position is safe:
+
+   * Place the queen on the board.
+   * Move to the **next row** and repeat the same process.
+6. If none of the columns in the current row are safe:
+
+   * This means we made a wrong choice earlier.
+   * **Go back (backtrack)** to the previous row.
+   * Move the queen from the previous row to the **next possible column** and try again.
+7. Continue this process of placing queens and backtracking whenever needed.
+8. If queens are successfully placed in all N rows:
+
+   * A **valid arrangement** has been found.
+   * You can record or print this solution.
+9. If all possibilities are checked and no arrangement works:
+
+   * There is **no solution** for the given N.
+
+---
+
+# ⭐ **One-Line Summary (In Words)**
+
+> The N–Queen problem is solved by placing queens row by row, checking safety in each possible column, and using backtracking to undo wrong placements until a valid configuration is found.
+
+---
+
+
+---
+
+# ⭐ **Algorithm for Insertion in Hash Table (Linear Probing)**
+
+1. Compute the hash value:
+   `h = hash(key)`
+
+2. If the slot `HT[h]` is **empty**,
+   → insert the key there and stop.
+
+3. If the slot `HT[h]` is **occupied**,
+   → a collision has occurred.
+
+4. Resolve the collision using **linear probing**:
+   Check the next slots in order:
+
+   * `(h + 1) mod N`
+   * `(h + 2) mod N`
+   * `(h + 3) mod N`
+     ... until an empty slot is found.
+
+5. Insert the key into the first **empty slot**.
+
+6. If all slots are checked and none is empty,
+   → the hash table is **full**, and insertion fails.
+
+---
+
+Here is the **short, clean, exam-ready algorithm** for **Hashing – Insertion using Quadratic Probing** 👇
+
+---
+
+# ⭐ **Algorithm for Insertion in Hash Table (Quadratic Probing)**
+
+1. Compute the initial hash index:
+   `h = hash(key)`
+
+2. If the slot `HT[h]` is **empty**,
+   → Insert the key there and stop.
+
+3. If `HT[h]` is **occupied**,
+   → A collision has occurred.
+
+4. Resolve the collision using **quadratic probing**:
+
+   For `i = 1` to `N – 1`:
+
+   * Compute new index:
+     `(h + i²) mod N`
+   * If this slot is empty, insert the key there and stop.
+
+5. If no empty slot is found after checking all `N` positions,
+   → The hash table is **full**, and insertion fails.
+
+---
+
+# ⭐ One-line summary
+
+> Quadratic probing checks positions `h + 1²`, `h + 2²`, `h + 3²`, ... (mod N) until an empty slot is found.
+
+
+Here is the **short, clean, exam-ready algorithm** for
+⭐ **Hashing – Insertion using Double Hashing**
+(No extra details, perfect for 3–5 marks.)
+
+---
+
+# ⭐ **Algorithm for Insertion in Hash Table (Double Hashing)**
+
+### Let:
+
+* `h1(key)` = first hash function
+* `h2(key)` = second hash function (must not be zero)
+
+---
+
+## **Steps**
+
+1. Compute the initial index:
+   `index = h1(key)`
+
+2. If `HT[index]` is **empty**,
+   → Insert the key and stop.
+
+3. If it is **occupied**, a collision occurs.
+
+4. Use **double hashing** to find the next slot:
+
+   For `i = 1` to `N – 1`:
+
+   * Compute new index:
+     `index = (h1(key) + i × h2(key)) mod N`
+   * If this slot is empty:
+     → Insert the key and stop.
+
+5. If all positions are checked and no empty slot is found,
+   → The hash table is **full**, and insertion fails.
+
+---
+
+# ⭐ One-line Summary
+
+> Double hashing resolves collisions by checking `(h1 + i × h2) mod N`, giving better distribution and fewer clusters.
+
+---
+
+
+
+# ⭐ **Algorithm for Insertion in Hash Table (Chaining)**
+
+1. Compute the hash value:
+   `h = hash(key)`
+
+2. Go to the linked list (chain) at index `h`.
+
+3. Insert the new key **at the beginning or end** of the linked list at `HT[h]`.
+
+4. If duplicates are not allowed, you may first search the chain to ensure the key is not already present.
+
+5. Insertion is complete — no collision needs to be resolved separately because chaining naturally handles multiple keys at the same index.
+
+---
+
+# ⭐ **One-Line Summary**
+
+> Chaining handles collisions by maintaining a linked list at each table index, and new keys are inserted into the linked list corresponding to their hash value.
+
+
+
+
+Below is the **clean, clear, and exam-ready algorithm** for **Huffman Tree Construction** — perfect for a **5–8 marks question**.
+
+---
+
+# ⭐ **Huffman Tree Algorithm**
+
+*(Used for optimal prefix coding / data compression)*
+
+---
+
+# 💡 **Idea (in words)**
+
+Huffman Coding builds a **binary tree** where the **least frequent characters** get the **deepest codes**,
+and the **most frequent characters** get the **shortest codes**.
+This produces **minimum total encoded length**.
+
+---
+
+# ⭐ **Algorithm: Huffman Tree Construction (Step-by-step)**
+
+*(Write exactly this in exam)*
+
+### **Input:**
+
+A set of characters with their frequencies.
+
+### **Output:**
+
+The Huffman Tree + Huffman Codes for each character.
+
+---
+
+## **Step 1 — Create leaf nodes**
+
+For each character and its frequency, create a **separate node**.
+
+---
+
+## **Step 2 — Insert nodes into a min-priority queue**
+
+Put all nodes into a **min heap** (priority queue)
+where the node with the **smallest frequency** has highest priority.
+
+---
+
+## **Step 3 — Build the Huffman Tree**
+
+Repeat the following steps **until only one node remains** in the priority queue:
+
+1. Remove the **two nodes with the smallest frequencies** from the queue.
+2. Create a **new internal node**:
+
+   * Its frequency = sum of the two removed nodes
+   * Left child = first node
+   * Right child = second node
+3. Insert this new internal node **back** into the min-priority queue.
+
+The final remaining node in the queue becomes the **root of the Huffman Tree**.
+
+---
+
+## **Step 4 — Assign Huffman Codes**
+
+Traverse the Huffman Tree:
+
+* Assign **0** for the left branch
+* Assign **1** for the right branch
+* Continue until you reach leaf nodes
+
+The bit string formed is the **Huffman code** for each character.
+
+---
+
+# ⭐ **One-Line Summary**
+
+> Huffman Tree is built by repeatedly combining the two lowest-frequency nodes into a new internal node until one tree remains, then generating codes by tree traversal.
+
+---
+
+# ⭐ **Example (Short)**
+
+Characters: A(5), B(9), C(12), D(13), E(16), F(45)
+
+After repeated merging, F gets shortest code, A gets longest.
+
+---
+
+If you want, I can also give:
+📌 Full worked example with tree diagram
+📌 Huffman coding steps in table form
+📌 Compression ratio explanation
+
+
+
+Here is the **short, simple, in-words algorithm** for **Floyd–Warshall (Floyd) Algorithm** — perfect for **3–5 marks**.
+
+---
+
+# ⭐ **Floyd Algorithm (In Words, Short)**
+
+### **Idea (in words)**
+
+Floyd’s algorithm finds the **shortest distance between every pair of vertices** in a graph.
+It repeatedly checks whether going through an **intermediate vertex** makes the path shorter.
+
+---
+
+# ⭐ **Algorithm (in words, short)**
+
+1. Start with the **distance matrix** of the graph (direct edge weights or ∞ if no edge).
+2. Consider each vertex **one by one** as an **intermediate**.
+3. For every pair of vertices (i, j):
+
+   * Check if the path **i → k → j** is shorter than the current distance **i → j**.
+   * If yes, update the distance.
+4. After trying every vertex as intermediate, the matrix will contain the **shortest distance between all pairs**.
+
+---
+
+# ⭐ **One-line Summary**
+
+> Floyd’s algorithm updates the distance matrix by checking if passing through each vertex gives a shorter path between every pair of vertices.
+
+---
+
+If you want a **tiny example** or **diagram**, just tell me!
+
+
+# knapsack 
+![alt text](image-95.png)
+![alt text](image-96.png)
+
+
+
+
+Sure — here’s a **very short, in-words** answer for **Floyd–Warshall** (perfect for 2–4 marks).
+
+---
+
+# ⭐ **Floyd–Warshall (in words, short)**
+
+**Idea:**
+Compute shortest distances between **every pair** of vertices by repeatedly allowing each vertex as an intermediate node and updating distances if going through that vertex is shorter.
+
+**Algorithm (in words):**
+
+1. Start with the distance matrix: direct edge weights, `0` on the diagonal, and `∞` where no edge exists.
+2. For each vertex `k` (one by one) consider it as an intermediate node.
+3. For every pair `(i, j)`, check if the path `i → k → j` is shorter than the current `i → j`. If yes, update `dist[i][j] = dist[i][k] + dist[k][j]`.
+4. After all `k` are processed, `dist[i][j]` holds the shortest distance for every pair.
+
+**Notes:**
+
+* Works for directed and undirected graphs.
+* Handles negative edge weights but **not** negative cycles.
+* Time complexity: **O(n³)**.
+
+---
+
+Want a tiny example matrix update to see one iteration?
