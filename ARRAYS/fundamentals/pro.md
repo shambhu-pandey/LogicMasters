@@ -6,6 +6,26 @@ It’s designed to be examiner-friendly and practice-ready.
 
 ---
 
+## 🔗 Practice index
+
+| # | Title | What | Complexity | Quick links |
+|---|---|---|---|---|
+| 1️⃣ | 🔝 Largest and Smallest Element | Max/Min | O(n) | [GFG / CN](#1-largest-and-smallest-element) |
+| 2️⃣ | 📐 Scope in Array (Function Update) | Pass-by-ref | O(n) | [GFG](#2-scope-in-array-function-update) |
+| 3️⃣ | ➕ Sum of Array Elements | Sum | O(n) | [GFG / CN](#3-sum-of-array-elements) |
+| 4️⃣ | ⚡ Power of 2 Check | Presence | O(1) | [L: 231 / GFG / CN](#4-power-of-2-check) |
+| 5️⃣ | 🔄 Reverse an Array | Reverse print | O(n) | [GFG / CN](#5-reverse-an-array) |
+| 6️⃣ | 🔄 Swap Alternate Elements | Pair swap | O(n) | [GFG / CN](#6-swap-alternate-elements-in-array) |
+| 7️⃣ | 🔎 Find Unique Element (XOR) | Single number | O(N) | [L: 136 / GFG / CN](#7-find-unique-element-in-array-xor) |
+| 8️⃣ | 🔎 Unique Number of Occurrences | Frequency uniqueness | O(N) | [L: 1207 / GFG](#8-unique-number-of-occurrences) |
+| 9️⃣ | 🔁 Find All Duplicates | Duplicates list | O(N) | [L: 442 / GFG](#9-find-all-duplicates-in-an-array) |
+| 🔟 | 🔗 Array Intersection | Two pointers | O(N+M) | [L: 350 / GFG](#10-find-array-intersection) |
+| 1️⃣1️⃣ | 🔗 Pair Sum | Two-sum pairs | O(n²) | [L: 167 / GFG / CN](#11-pair-sum) |
+| 1️⃣2️⃣ | 🔗 Triplet Sum | Three-sum triplets | O(n³) / O(n²) | [L: 15 / GFG / CN](#12-triplet-sum) |
+| 1️⃣3️⃣ | 🔄 Sort 0s, 1s, and 2s | Dutch National Flag | O(n) | [L: 75 / GFG / CN](#13-sort-0s-1s-and-2s) |
+
+---
+
 ## 📋 Table of contents
 
 1. 🔝 Largest and smallest element  
@@ -17,16 +37,19 @@ It’s designed to be examiner-friendly and practice-ready.
 7. 🔎 Find unique element in array (XOR)  
 8. 🔎 Unique number of occurrences  
 9. 🔁 Find all duplicates in an array  
-10. 🔗 Find array intersection
+10. 🔗 Find array intersection  
+11. 🔗 Pair Sum  
+12. 🔗 Triplet Sum  
+13. 🔄 Sort 0s, 1s, and 2s  
 
 ---
+
 
 ## 🔗 Practice links (all problems)
 
 - GeeksforGeeks: https://www.geeksforgeeks.org/arrays-in-c-cpp/  
 - LeetCode: https://leetcode.com/tag/array/  
 - Coding Ninjas: https://www.codingninjas.com/studio/problems?topic=Arrays
-
 ---
 
 # 1. 🔝 Largest and smallest element
@@ -614,3 +637,323 @@ vector<int> findArrayIntersection(vector<int> &arr1, int n, vector<int> &arr2, i
 ![alt text](image-5.png)
 
 ![alt text](image-6.png)
+
+
+
+
+# 11.  🔗 Pair Sum in Array
+
+**Difficulty:** 🟢 Easy  
+**Tags:** Array, Brute Force, Sorting  
+
+---
+
+### 🧩 Problem Statement  
+Given an array `arr` of integers and a target sum `s`, find all pairs of elements whose sum equals `s`.  
+Return the pairs in sorted order, with each pair stored as `[min, max]`.
+
+---
+
+### ✅ Example  
+```
+Input: arr = [1, 2, 3, 4, 5], s = 5
+Output: [[1,4], [2,3]]
+```
+
+---
+
+### 💡 Approach  
+- Use two nested loops to check all pairs `(i, j)` where `i < j`.  
+- If `arr[i] + arr[j] == s`, store the pair as `[min(arr[i], arr[j]), max(arr[i], arr[j])]`.  
+- After collecting all pairs, sort the result vector to maintain order.  
+
+---
+
+### 📝 Dry Run Example  
+**Input:** arr = [1, 2, 3, 4, 5], s = 5  
+
+| i | j | arr[i] | arr[j] | Sum | Action | result |
+|---|---|--------|--------|-----|--------|--------|
+| 0 | 1 | 1      | 2      | 3   | skip   | [] |
+| 0 | 2 | 1      | 3      | 4   | skip   | [] |
+| 0 | 3 | 1      | 4      | 5   | push [1,4] | [[1,4]] |
+| 0 | 4 | 1      | 5      | 6   | skip   | [[1,4]] |
+| 1 | 2 | 2      | 3      | 5   | push [2,3] | [[1,4],[2,3]] |
+| 1 | 3 | 2      | 4      | 6   | skip   | [[1,4],[2,3]] |
+| 1 | 4 | 2      | 5      | 7   | skip   | [[1,4],[2,3]] |
+| … | … | …      | …      | …   | …      | … |
+
+Final result after sorting: `[[1,4],[2,3]]`
+
+---
+
+### 💻 Solution (C++)
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> pairSum(vector<int> &arr, int s){
+   vector<vector<int>> result;
+ 
+   for(int i = 0; i < arr.size(); i++){
+      for(int j = i+1; j < arr.size(); j++){
+         if(arr[i] + arr[j] == s){
+            vector<int> ans;
+            ans.push_back(min(arr[i], arr[j])); // store min
+            ans.push_back(max(arr[i], arr[j])); // store max
+            result.push_back(ans);
+         }
+      }
+   }
+  
+   sort(result.begin(), result.end()); // sort pairs
+   return result;
+}
+
+int main(){
+    vector<int> arr = {1,2,3,4,5};
+    int s = 5;
+    vector<vector<int>> res = pairSum(arr, s);
+    for(auto v : res){
+        cout << "[" << v[0] << "," << v[1] << "] ";
+    }
+    return 0;
+}
+```
+
+---
+
+### 📊 Complexity Analysis  
+- **Time Complexity:** O(n²) → nested loops check all pairs  
+- **Space Complexity:** O(k) → where k is the number of valid pairs  
+
+---
+
+### 🔗 Practice Links  
+- [LeetCode: Two Sum](https://leetcode.com/problems/two-sum/)  
+- [GeeksforGeeks: Find all pairs with given sum](https://www.geeksforgeeks.org/find-all-pairs-in-an-array-whose-sum-is-equal-to-a-given-number/)  
+- [Coding Ninjas: Pair Sum](https://www.codingninjas.com/studio/problems/pair-sum_697295)  
+
+---
+
+
+# 12. 🔗 Find Distinct Triplets with Given Sum
+
+**Difficulty:** 🟡 Medium  
+**Tags:** Array, Brute Force, Triplet Sum  
+
+---
+
+### 🧩 Problem Statement  
+You are given an array/list `ARR` consisting of `N` integers.  
+Your task is to find all the **distinct triplets** present in the array which add up to a given number `K`.
+
+A triplet `{ARR[i], ARR[j], ARR[k]}` is valid if:
+- `i != j`, `j != k`, `i != k`  
+- `ARR[i] + ARR[j] + ARR[k] = K`
+
+If no triplet exists, return an empty list (output printed as `-1`).
+
+---
+
+### ✅ Example  
+```
+Input: ARR = [10, 5, 5, 5, 2], K = 12
+Output: [[2, 5, 5]]
+```
+
+```
+Input: ARR = [1, 2, 3, 1, 2, 3], K = 6
+Output: [[1, 2, 3]]
+```
+
+```
+Input: ARR = [1, 2, 3, 4], K = 11
+Output: -1
+```
+
+```
+Input: ARR = [1, 1, 2, 2, 1, 1], K = 4
+Output: [[1, 1, 2]]
+```
+
+---
+
+### 💡 Approach  
+- Use three nested loops to check all possible triplets `(i, j, k)` with `i < j < k`.  
+- If their sum equals `K`, store the triplet.  
+- Sort each triplet before storing to normalize order.  
+- Use a `set` to avoid duplicate triplets.  
+- Convert the set back to a vector before returning.
+
+---
+
+### 📝 Dry Run Example  
+**Input:** ARR = [10, 5, 5, 5, 2], K = 12  
+
+- i=0, j=1, k=4 → 10+5+2=17 → skip  
+- i=1, j=2, k=4 → 5+5+2=12 → push [2,5,5]  
+- i=2, j=3, k=4 → 5+5+2=12 → push [2,5,5] (duplicate, ignored by set)  
+
+Final result: `[[2,5,5]]`
+
+---
+
+### 💻 Solution (C++)
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> findTriplets(vector<int> arr, int n, int K) {
+    set<vector<int>> uniqueSet;
+
+    for(int i = 0; i < n; i++){
+        for(int j = i+1; j < n; j++){
+            for(int k = j+1; k < n; k++){
+                if(arr[i] + arr[j] + arr[k] == K){
+                    vector<int> ans;
+                    ans.push_back(arr[i]);
+                    ans.push_back(arr[j]);
+                    ans.push_back(arr[k]);
+
+                    sort(ans.begin(), ans.end()); // normalize triplet
+                    uniqueSet.insert(ans);        // store only distinct triplets
+                }
+            }
+        }
+    }
+
+    vector<vector<int>> result(uniqueSet.begin(), uniqueSet.end());
+    return result;
+}
+
+int main(){
+    vector<int> arr = {10, 5, 5, 5, 2};
+    int K = 12;
+    vector<vector<int>> res = findTriplets(arr, arr.size(), K);
+
+    if(res.empty()) cout << "-1";
+    else {
+        for(auto triplet : res){
+            for(int x : triplet) cout << x << " ";
+            cout << endl;
+        }
+    }
+    return 0;
+}
+```
+
+---
+
+### 📊 Complexity Analysis  
+- **Time Complexity:** O(n³) → three nested loops  
+- **Space Complexity:** O(k) → number of distinct triplets stored  
+
+---
+
+### 🔗 Practice Links  
+- [LeetCode: 3Sum](https://leetcode.com/problems/3sum/)  
+- [GeeksforGeeks: Find all triplets with given sum](https://www.geeksforgeeks.org/find-triplets-array-whose-sum-equal-given-number/)  
+- [Coding Ninjas: Triplet Sum](https://www.codingninjas.com/studio/problems/triplets-with-given-sum_893028)  
+
+---
+
+
+# 13. 🔄 Sort 0s, 1s, and 2s (Dutch National Flag Algorithm)
+
+**Difficulty:** 🟡 Medium  
+**Tags:** Array, Sorting, Two Pointers  
+
+---
+
+### 🧩 Problem Statement  
+You are given an array consisting only of `0s`, `1s`, and `2s`.  
+Your task is to sort the array in ascending order **without using extra space** and in **linear time**.
+
+This is also known as the **Dutch National Flag problem**.
+
+---
+
+### ✅ Example  
+```
+Input: arr = [0, 2, 1, 2, 0, 1]
+Output: [0, 0, 1, 1, 2, 2]
+```
+
+```
+Input: arr = [2, 2, 0, 1]
+Output: [0, 1, 2, 2]
+```
+
+---
+
+### 💡 Approach (Three Pointers)  
+- Maintain three pointers:  
+  - `low` → boundary for 0s  
+  - `mid` → current element under consideration  
+  - `high` → boundary for 2s  
+- Traverse the array with `mid` until it crosses `high`:  
+  - If `arr[mid] == 0` → swap with `low`, increment both `low` and `mid`.  
+  - If `arr[mid] == 1` → just increment `mid`.  
+  - If `arr[mid] == 2` → swap with `high`, decrement `high`.  
+
+This ensures all 0s move to the left, 2s move to the right, and 1s remain in the middle.
+
+---
+
+### 📝 Dry Run Example  
+**Input:** arr = [0, 2, 1, 2, 0, 1]  
+
+| low | mid | high | arr[mid] | Action | Array state |
+|-----|-----|------|----------|--------|-------------|
+| 0   | 0   | 5    | 0        | swap arr[0], arr[0]; low++, mid++ | [0,2,1,2,0,1] |
+| 1   | 1   | 5    | 2        | swap arr[1], arr[5]; high-- | [0,1,1,2,0,2] |
+| 1   | 1   | 4    | 1        | mid++ | [0,1,1,2,0,2] |
+| 1   | 2   | 4    | 1        | mid++ | [0,1,1,2,0,2] |
+| 1   | 3   | 4    | 2        | swap arr[3], arr[4]; high-- | [0,1,1,0,2,2] |
+| 1   | 3   | 3    | 0        | swap arr[1], arr[3]; low++, mid++ | [0,0,1,1,2,2] |
+
+Final result: `[0,0,1,1,2,2]`
+
+---
+
+### 💻 Solution (C++)
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+void sort012(int *arr, int n) {
+    int low = 0, mid = 0, high = n - 1;
+
+    while(mid <= high) {
+        if(arr[mid] == 0) {
+            swap(arr[low], arr[mid]);
+            low++;
+            mid++;
+        }
+        else if(arr[mid] == 1) {
+            mid++;
+        }
+        else { // arr[mid] == 2
+            swap(arr[mid], arr[high]);
+            high--;
+        }
+    }
+}
+
+```
+
+---
+
+### 📊 Complexity Analysis  
+- **Time Complexity:** O(n) → single traversal of the array  
+- **Space Complexity:** O(1) → in-place sorting  
+
+---
+
+### 🔗 Practice Links  
+- [LeetCode: Sort Colors](https://leetcode.com/problems/sort-colors/)  
+- [GeeksforGeeks: Sort an array of 0s, 1s and 2s](https://www.geeksforgeeks.org/sort-an-array-of-0s-1s-and-2s/)  
+- [Coding Ninjas: Sort 0 1 2](https://www.codingninjas.com/studio/problems/sort-0-1-2_631055)  
+
+---
