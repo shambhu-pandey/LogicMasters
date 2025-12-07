@@ -1,4 +1,48 @@
 
+# 📑 String Problem Set in C++
+
+Welcome to the String Problem Set!  
+This collection includes common string problems solved in C++, with explanations, examples, solutions, and complexity analysis.  
+It’s designed to be examiner‑friendly and practice‑ready.
+
+---
+
+## 🔗 Practice index
+
+| # | Title | What | Complexity | Quick links |
+|---|---|---|---|---|
+| 1️⃣ | 🔤 Find Length of a String | Manual count | O(n) | [GFG / CN](#1-find-length-of-a-string) |
+| 2️⃣ | 🔄 Reverse a String | Two‑pointers / Concatenation | O(n) | [LeetCode / GFG / CN](#2-reverse-a-string) |
+| 3️⃣ | 🔎 Valid Palindrome | Clean + reverse check | O(n) | [LeetCode / GFG / CN](#3-valid-palindrome) |
+| 4️⃣ | 🔄 Reverse String by Words (Dot) | Word order reverse | O(n) | [LeetCode / GFG / CN](#4-reverse-string-by-words-dot-separator) |
+| 5️⃣ | 🔄 Reverse Words in a String | Reverse each word | O(n) | [LeetCode / GFG / CN](#5-reverse-words-in-a-string-keep-word-order) |
+| 6️⃣ | 🔎 Maximum Occurring Character | Frequency count | O(n) | [GFG / CN](#6-maximum-occurring-character-in-a-string) |
+| 7️⃣ | 🔄 Replace Spaces | Replace `' '` with `@40` | O(n) | [GFG / CN](#7-replace-spaces-in-a-string) |
+| 8️⃣ | 🔄 Remove All Occurrences of Substring | Erase + find loop | O(n×m) | [LeetCode / GFG](#8-remove-all-occurrences-of-a-substring) |
+| 9️⃣ | 🔄 Permutation in String | Sliding window check | O(n×m) | [LeetCode / GFG](#9-permutation-in-string-check-inclusion) |
+| 🔟 | 🔄 Remove Adjacent Duplicates | Stack simulation | O(n) | [LeetCode / GFG / CN](#10-remove-all-adjacent-duplicates-in-string) |
+| 1️⃣1️⃣ | 🔄 String Compression | Run‑length encoding | O(n) | [LeetCode / GFG](#11-string-compression) |
+
+---
+
+## 📋 Table of contents
+
+1. 🔤 Find length of a string  
+2. 🔄 Reverse a string  
+3. 🔎 Valid palindrome  
+4. 🔄 Reverse string by words (dot separator)  
+5. 🔄 Reverse words in a string (keep word order)  
+6. 🔎 Maximum occurring character in a string  
+7. 🔄 Replace spaces in a string  
+8. 🔄 Remove all occurrences of a substring  
+9. 🔄 Permutation in string (check inclusion)  
+10. 🔄 Remove all adjacent duplicates in string  
+11. 🔄 String compression  
+
+---
+
+
+
 # 1 🔤 Find Length of a String (Manual Count)
 
 **Difficulty:** 🟢 Easy  
