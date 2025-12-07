@@ -42,6 +42,15 @@ It’s designed to be examiner‑friendly and practice‑ready.
 ---
 
 
+# 🔗 Practice links (all string problems)
+
+- **GeeksforGeeks:** [https://www.geeksforgeeks.org/string-data-structure/](https://www.geeksforgeeks.org/string-data-structure/)  
+- **LeetCode:** [https://leetcode.com/tag/string/](https://leetcode.com/tag/string/)  
+- **Coding Ninjas:** [https://www.codingninjas.com/studio/problems?topic=Strings](https://www.codingninjas.com/studio/problems?topic=Strings)  
+
+---
+
+
 
 # 1 🔤 Find Length of a String (Manual Count)
 

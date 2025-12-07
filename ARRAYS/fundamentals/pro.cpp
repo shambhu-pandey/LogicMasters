@@ -1,6 +1,6 @@
 
-#include<iostream>
-using namespace std;
+// #include<iostream>
+// using namespace std;
 
 // LAREGEST AND SMALLEST ELEMENT 
 
@@ -186,11 +186,11 @@ using namespace std;
 
 //swap alternate 
 
-void printarray(int array[], int n ){
-    for(int i=0;i<n;i++){
-        cout<<array[i]<<" ";
-    }
-}
+// void printarray(int array[], int n ){
+//     for(int i=0;i<n;i++){
+//         cout<<array[i]<<" ";
+//     }
+// }
 
 // void swapalternate(int arr[] ,int size){
 //     for(int i =0;i<size;i=i+2){
@@ -200,28 +200,92 @@ void printarray(int array[], int n ){
 //     }
 // }
 
-void swapalternate(int arr[] ,int size){
-    for(int i =0;i<size;i=i+2){
-        if(i+1<size){
-            int temp= arr[i+1];
-            arr[i+1]= arr[i];
-            arr[i]=temp;
+
+
+// void swapalternate(int arr[] ,int size){
+//     for(int i =0;i<size;i=i+2){
+//         if(i+1<size){
+//             int temp= arr[i+1];
+//             arr[i+1]= arr[i];
+//             arr[i]=temp;
+//         }
+//     }
+// }
+
+// // swap alternate
+// int main(){
+
+//     int even[8]= {1,2,3,4,5,6,7,8};
+//     int odd[5]= {5,6,7,8,9};
+
+//     swapalternate(even , 8);
+//     printarray(even, 8);
+
+//     cout<<endl;
+
+//     swapalternate(odd , 8);
+//     printarray(odd, 5);
+//     return 0;
+// } 
+
+
+
+#include<iostream>
+using namespace std;
+
+
+    int target_check(int arr[][2] , int target , int n , int m){
+      for(int i=0;i<2;i++){
+        for(int j=0;j<2;j++){
+            if(arr[i][j]==target){
+                return 1;
+            }
         }
+     
     }
+    return 0;
 }
 
-// swap alternate
 int main(){
 
-    int even[8]= {1,2,3,4,5,6,7,8};
-    int odd[5]= {5,6,7,8,9};
+    int arr[2][2];
 
-    swapalternate(even , 8);
-    printarray(even, 8);
+    cout<<"enter element and that will store in row wise  :"<<endl;
+    for(int i =0;i<2;i++){
+        for(int j =0;j<2;j++){
+            cin>>arr[i][j];
+        }
+    }
 
-    cout<<endl;
+    // cout<<"enter element and that will store in column wise  :"<<endl;
+    // for(int j =0;j<2;j++){
+    //     for(int i=0;i<2;i++){
+    //         cin>>arr[i][j];
+    //     }
+    // }
 
-    swapalternate(odd , 8);
-    printarray(odd, 5);
+    cout<<"array element are :"<<endl;
+    for(int i=0;i<2;i++){
+        for(int j=0;j<2;j++){
+            cout<<arr[i][j]<<" ";
+        }
+    }
+
+    int target;
+    cout<<"\n enter element you want to search :";
+    cin>>target;
+
+    if(target_check(arr , target , 2,2)){
+        cout<<"element found";
+    }
+    else{
+        cout<<"not found";
+    }
+    
+
+
+    cout<<"row wise sum :"<<endl;
+    
     return 0;
-} 
+
+}

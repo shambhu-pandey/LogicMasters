@@ -47,7 +47,7 @@ It’s designed to be examiner-friendly and practice-ready.
 
 ## 🔗 Practice links (all problems)
 
-- GeeksforGeeks: https://www.geeksforgeeks.org/arrays-in-c-cpp/  
+- GeeksforGeeks: https://www.geeksforgeeks.org/dsa/array-data-structure-guide/ 
 - LeetCode: https://leetcode.com/tag/array/  
 - Coding Ninjas: https://www.codingninjas.com/studio/problems?topic=Arrays
 ---
