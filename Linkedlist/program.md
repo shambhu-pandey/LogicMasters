@@ -6,6 +6,14 @@ Each problem includes **examples, explanation, solution, and complexity analysis
 
 ---
 
+## what is linkedlist
+#### linkedlist is a type of  linear data structure which is a collection of nodes and nodes contain data and address of next node 
+
+** it is a dynamic data structure which can grow and shrink on runtime according to need  ,
+its not store data in continous manner like array 
+
+---
+
 ## 📑 Table of Contents
 
 1. [🟢 Singly Linked List Creation](#1--singly-linked-list-creation)
@@ -19,7 +27,7 @@ Each problem includes **examples, explanation, solution, and complexity analysis
 
 # 1. 🟢 Singly Linked List Creation
 
-**Difficulty:** 🟢 Easy
+**Difficulty:** 🟢 Easy 
 **Tags:** Linked List, Node, Pointer
 
 ### 💻 Solution (C++)
