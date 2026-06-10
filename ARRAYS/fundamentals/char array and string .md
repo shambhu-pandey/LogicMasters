@@ -1125,66 +1125,69 @@ class Solution {
 public:
     int countValidWords(string sentence) {
 
-        int count = 0;
+        int count = 0;                 // valid words count karega
         int n = sentence.size();
 
+        // pura sentence traverse karenge
         for(int i = 0; i < n; ) {
 
             // extra spaces skip karo
             while(i < n && sentence[i] == ' ')
                 i++;
 
+            // agar end tak pahuch gaye toh break
             if(i >= n) break;
 
-            bool valid = true;
-            int hyphen = 0;
+            bool valid = true;         // current word valid maan rahe hain
+            int hyphen = 0;            // hyphen count
 
-            int j = i;
+            int j = i;                 // j word traverse karega
 
-            // ek word traverse kar rahe hain
+            // ek complete word traverse kar rahe hain
             while(j < n && sentence[j] != ' ') {
 
                 char ch = sentence[j];
 
-                // digit allowed nahi
+                // ❌ agar digit mila toh invalid
                 if(isdigit(ch))
                     valid = false;
 
-                // hyphen check
+                // 🔥 hyphen check
                 else if(ch == '-') {
 
                     hyphen++;
 
-                    // ek se jyada hyphen
+                    // ❌ ek se jyada hyphen allowed nahi
                     if(hyphen > 1)
                         valid = false;
 
-                    // hyphen start/end me nahi hona chahiye
+                    // ❌ hyphen start/end me nahi hona chahiye
                     else if(j == i || sentence[j + 1] == ' ')
                         valid = false;
 
-                    // hyphen ke dono side lowercase letters hone chahiye
+                    // ❌ hyphen ke dono side lowercase letters hone chahiye
                     else if(!(islower(sentence[j - 1]) &&
                               islower(sentence[j + 1])))
                         valid = false;
                 }
 
-                // punctuation check
+                // 🔥 punctuation check
                 else if(ch == '!' || ch == '.' || ch == ',') {
 
-                    // punctuation sirf end me allowed
+                    // ❌ punctuation sirf word ke end me allowed
                     if(j + 1 < n && sentence[j + 1] != ' ')
                         valid = false;
                 }
 
+                // next character
                 j++;
             }
 
-            // agar word valid hai
+            // ✅ agar word valid hai toh count badhao
             if(valid)
                 count++;
 
-            // next word pe jao
+            // next word pe move karo
             i = j + 1;
         }
 
