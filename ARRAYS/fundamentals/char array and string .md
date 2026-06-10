@@ -1104,3 +1104,151 @@ public:
 - [GeeksforGeeks: String compression](https://www.geeksforgeeks.org/run-length-encoding/)  
 
 ---
+## LeetCode 2047 — Count Valid Words in a Sentence
+
+Given a string `sentence`, return the number of valid words in the sentence.
+
+A token is valid if:
+
+* It contains only lowercase letters, hyphen `-`, and punctuation marks `! , .`
+* It does not contain digits
+* It contains at most one hyphen `-`
+* Hyphen must be surrounded by lowercase letters
+* Punctuation marks `! , .` are allowed only at the end
+
+---
+
+### ✅ Code
+
+```cpp id="7e8s2x"
+class Solution {
+public:
+    int countValidWords(string sentence) {
+
+        int count = 0;
+        int n = sentence.size();
+
+        for(int i = 0; i < n; ) {
+
+            // extra spaces skip karo
+            while(i < n && sentence[i] == ' ')
+                i++;
+
+            if(i >= n) break;
+
+            bool valid = true;
+            int hyphen = 0;
+
+            int j = i;
+
+            // ek word traverse kar rahe hain
+            while(j < n && sentence[j] != ' ') {
+
+                char ch = sentence[j];
+
+                // digit allowed nahi
+                if(isdigit(ch))
+                    valid = false;
+
+                // hyphen check
+                else if(ch == '-') {
+
+                    hyphen++;
+
+                    // ek se jyada hyphen
+                    if(hyphen > 1)
+                        valid = false;
+
+                    // hyphen start/end me nahi hona chahiye
+                    else if(j == i || sentence[j + 1] == ' ')
+                        valid = false;
+
+                    // hyphen ke dono side lowercase letters hone chahiye
+                    else if(!(islower(sentence[j - 1]) &&
+                              islower(sentence[j + 1])))
+                        valid = false;
+                }
+
+                // punctuation check
+                else if(ch == '!' || ch == '.' || ch == ',') {
+
+                    // punctuation sirf end me allowed
+                    if(j + 1 < n && sentence[j + 1] != ' ')
+                        valid = false;
+                }
+
+                j++;
+            }
+
+            // agar word valid hai
+            if(valid)
+                count++;
+
+            // next word pe jao
+            i = j + 1;
+        }
+
+        return count;
+    }
+};
+```
+
+---
+
+# 🔥 Dry Run
+
+Input:
+
+```txt id="slsr2y"
+sentence = "cat and  dog"
+```
+
+Words:
+
+```txt id="fqjlwm"
+cat
+and
+dog
+```
+
+Sab valid hain.
+
+Answer:
+
+```txt id="9ej56e"
+3
+```
+
+---
+
+Input:
+
+```txt id="zuv6vd"
+"a-b."
+```
+
+* ek hyphen ✅
+* hyphen ke dono side letters ✅
+* punctuation end me ✅
+
+Answer:
+
+```txt id="w0wgn5"
+1
+```
+
+---
+
+Input:
+
+```txt id="9tzb59"
+"ab-"
+```
+
+Hyphen end me hai ❌
+
+Answer:
+
+```txt id="n1yvpo"
+0
+```
