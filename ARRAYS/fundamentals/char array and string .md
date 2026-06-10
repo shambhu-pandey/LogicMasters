@@ -1255,3 +1255,390 @@ Answer:
 ```txt id="n1yvpo"
 0
 ```
+
+
+
+
+# 🔥 Question
+
+Given an array of strings `words[]`.
+
+Find the **longest string** such that:
+
+✅ Every prefix of that string is also present in the array.
+
+If multiple strings have same maximum length:
+
+✅ Return the **lexicographically smallest** string.
+
+---
+
+# ✅ Example 1
+
+Input:
+
+```txt id="6g2j1x"
+words = ["p", "pr", "pro", "probl", "problem", "pros", "process", "processor"]
+```
+
+Output:
+
+```txt id="1t7k5y"
+"pros"
+```
+
+---
+
+# 🔥 Why?
+
+Check:
+
+```txt id="8r4m2n"
+"pros"
+```
+
+Prefixes:
+
+```txt id="2c9v7b"
+p
+pr
+pro
+pros
+```
+
+Sab array me present hain ✅
+
+---
+
+Now check:
+
+```txt id="4n1z8x"
+"problem"
+```
+
+Prefixes:
+
+```txt id="5q7w3m"
+p
+pr
+pro
+prob
+```
+
+But:
+
+```txt id="9x2k6t"
+"prob"
+```
+
+array me nahi hai ❌
+
+So invalid.
+
+---
+
+# ✅ Example 2
+
+Input:
+
+```txt id="3m8p1y"
+words = ["ab", "a", "abc", "abd"]
+```
+
+Output:
+
+```txt id="7k4n2v"
+"abc"
+```
+
+---
+
+# 🔥 Why?
+
+Both:
+
+```txt id="1v9t3m"
+abc
+abd
+```
+
+valid hain.
+
+Prefixes:
+
+```txt id="4b7x1q"
+a
+ab
+abc
+```
+
+and
+
+```txt id="9n5w2k"
+a
+ab
+abd
+```
+
+sab present hain ✅
+
+Now dono same length ke hain:
+
+```txt id="6y1r8p"
+3
+```
+
+Toh:
+
+```txt id="5m2z9x"
+lexicographically smaller
+```
+
+choose karenge.
+
+```txt id="2t8v4n"
+abc < abd
+```
+
+So answer:
+
+```txt id="8q1m7y"
+abc
+```
+
+---
+
+# ✅ Code with Full Comments
+
+```cpp id="4x7m2q"
+class Solution {
+public:
+
+    string longestString(vector<string>& words) {
+
+        // saare words ko set me store kar diya
+        // taaki searching fast ho jaye
+        unordered_set<string> st(words.begin(), words.end());
+
+        // final answer store karega
+        string ans = "";
+
+        // har word check karenge
+        for(string word : words) {
+
+            bool valid = true;
+
+            // prefix banane ke liye
+            string prefix = "";
+
+            // current word ke saare prefixes check karo
+            for(int i = 0; i < word.size(); i++) {
+
+                // ek-ek character add karke prefix bana rahe hain
+                prefix += word[i];
+
+                // agar prefix set me nahi mila
+                // toh word invalid hai
+                if(st.find(prefix) == st.end()) {
+
+                    valid = false;
+                    break;
+                }
+            }
+
+            // agar current word valid hai
+            if(valid) {
+
+                // agar current word bada hai
+                if(word.size() > ans.size()) {
+
+                    ans = word;
+                }
+
+                // agar same size hai
+                // toh lexicographically smaller choose karo
+                else if(word.size() == ans.size()
+                        && word < ans) {
+
+                    ans = word;
+                }
+            }
+        }
+
+        // final answer
+        return ans;
+    }
+};
+```
+
+---
+
+# 🔥 Step-by-Step Dry Run
+
+Input:
+
+```txt id="7v1m4x"
+["p", "pr", "pro", "pros"]
+```
+
+---
+
+# ✅ Step 1
+
+```cpp id="8x2q5n"
+unordered_set<string> st(words.begin(), words.end());
+```
+
+Set:
+
+```txt id="1m9v7k"
+{
+ p,
+ pr,
+ pro,
+ pros
+}
+```
+
+---
+
+# ✅ Step 2
+
+Current word:
+
+```txt id="3k7t1y"
+"pros"
+```
+
+---
+
+# ✅ Prefix Building
+
+Initially:
+
+```txt id="9p2x6m"
+prefix = ""
+```
+
+---
+
+## i = 0
+
+```cpp id="5v8n1q"
+prefix += 'p'
+```
+
+Now:
+
+```txt id="2m7x4k"
+prefix = "p"
+```
+
+Check:
+
+```cpp id="4t1z8n"
+st.find("p")
+```
+
+✅ Present
+
+---
+
+## i = 1
+
+```txt id="7q5v2m"
+prefix = "pr"
+```
+
+✅ Present
+
+---
+
+## i = 2
+
+```txt id="1x8k4n"
+prefix = "pro"
+```
+
+✅ Present
+
+---
+
+## i = 3
+
+```txt id="6m2v9q"
+prefix = "pros"
+```
+
+✅ Present
+
+---
+
+# ✅ Valid Word
+
+```txt id="9k1x7m"
+valid = true
+```
+
+So:
+
+```txt id="3v8q2n"
+ans = "pros"
+```
+
+---
+
+# 🔥 Most Important Concept
+
+## Prefix Building
+
+```cpp id="1n4x8m"
+prefix += word[i];
+```
+
+Example:
+
+```txt id="7m2q9v"
+word = "apple"
+```
+
+Flow:
+
+```txt id="2x6k1n"
+a
+ap
+app
+appl
+apple
+```
+
+---
+
+# 🔥 Why `unordered_set`?
+
+Fast searching ke liye.
+
+```cpp id="5q9v2m"
+st.find(prefix)
+```
+
+Time:
+
+```txt id="8n1x4k"
+O(1)
+```
+
+approx.
+
+---
+
+# ⏱ Time Complexity
+
+```txt id="3m7v1q"
+O(n * m)
+```
+
+Where:
+
+* `n` = number of words
+* `m` = average word length
