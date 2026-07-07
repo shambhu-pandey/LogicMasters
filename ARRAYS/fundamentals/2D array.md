@@ -565,55 +565,71 @@ Matrix:
 
 ### 💻 Solution (C++)
 ```cpp
-class Solution {
-public:
-    vector<int> spiralOrder(vector<vector<int>>& matrix) {
-        if(matrix.empty() || matrix[0].empty()) return {};
+#include <bits/stdc++.h>
+using namespace std;
 
-        vector<int> ans;
-        int row = matrix.size();
-        int col = matrix[0].size();
+vector<int> spiralOrder(vector<vector<int>>& matrix) {
 
-        int count = 0;
-        int total = row * col;
+    vector<int> ans;
 
-        int startingRow = 0;
-        int endingCol = col - 1;
-        int endingRow = row - 1;
-        int startingCol = 0;
+    int rows = matrix.size();
+    int cols = matrix[0].size();
 
-        while(count < total) {
-            // Traverse top row
-            for(int index = startingCol; count < total && index <= endingCol; index++) {
-                ans.push_back(matrix[startingRow][index]);
-                count++;
-            }
-            startingRow++;
+    int top = 0;
+    int bottom = rows - 1;
+    int left = 0;
+    int right = cols - 1;
 
-            // Traverse right column
-            for(int index = startingRow; count < total && index <= endingRow; index++) {
-                ans.push_back(matrix[index][endingCol]);
-                count++;
-            }
-            endingCol--;
+    while(top <= bottom && left <= right) {
 
-            // Traverse bottom row
-            for(int index = endingCol; count < total && index >= startingCol; index--) {
-                ans.push_back(matrix[endingRow][index]);
-                count++;
-            }
-            endingRow--;
-
-            // Traverse left column
-            for(int index = endingRow; count < total && index >= startingRow; index--) {
-                ans.push_back(matrix[index][startingCol]);
-                count++;
-            }
-            startingCol++;
+        // Top Row
+        for(int i = left; i <= right; i++) {
+            ans.push_back(matrix[top][i]);
         }
-        return ans;
+        top++;
+
+        // Right Column
+        for(int i = top; i <= bottom; i++) {
+            ans.push_back(matrix[i][right]);
+        }
+        right--;
+
+        // Bottom Row
+        if(top <= bottom) {
+            for(int i = right; i >= left; i--) {
+                ans.push_back(matrix[bottom][i]);
+            }
+            bottom--;
+        }
+
+        // Left Column
+        if(left <= right) {
+            for(int i = bottom; i >= top; i--) {
+                ans.push_back(matrix[i][left]);
+            }
+            left++;
+        }
     }
-};
+
+    return ans;
+}
+
+int main() {
+
+    vector<vector<int>> matrix = {
+        {1,2,3},
+        {4,5,6},
+        {7,8,9}
+    };
+
+    vector<int> ans = spiralOrder(matrix);
+
+    for(int x : ans) {
+        cout << x << " ";
+    }
+
+    return 0;
+}
 ```
 
 ---
