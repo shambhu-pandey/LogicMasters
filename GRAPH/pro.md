@@ -8052,3 +8052,1844 @@ Shortest Path
 **Dijkstra** tab use hota hai jab graph weighted ho aur **cycle ho sakti ho**. Ye teenon me sabse common confusion hota hai, aur TCS isi concept par question ghuma kar pooch sakta hai.
 
 
+
+
+
+Bilkul bhai 💯. **Ab se main isi format me padhauga**, jo TCS NQT + Love Babbar dono ke liye best hai.
+
+---
+
+# 📚 Topic: Dijkstra's Algorithm (Using Set)
+
+---
+
+# 🎯 TCS Me Kaise Puch Sakta Hai?
+
+TCS kabhi nahi likhega:
+
+> Implement Dijkstra's Algorithm.
+
+Wo story dega.
+
+### Example 1
+
+> There are **N cities** connected by roads. Every road has a travel cost. Find the minimum cost from source city to all other cities.
+
+✅ Dijkstra
+
+---
+
+### Example 2
+
+> Find the cheapest flight from source airport.
+
+✅ Dijkstra
+
+---
+
+### Example 3
+
+> Internet network me har cable ka delay diya hai. Find minimum delay.
+
+✅ Dijkstra
+
+---
+
+### Example 4
+
+> GPS Navigation system me shortest distance find karo.
+
+✅ Dijkstra
+
+---
+
+# ⭐ Question Dekhte Hi Kya Sochna Hai?
+
+Question me agar ye words aaye
+
+```text
+City
+Road
+Cost
+Distance
+Cheapest
+Minimum Cost
+Positive Weight
+```
+
+To dimag me
+
+```text
+Weighted Graph
+
+↓
+
+Shortest Path
+
+↓
+
+Positive Weight
+
+↓
+
+Dijkstra
+```
+
+---
+
+# ⭐ Algorithm (Hinglish)
+
+```
+Step 1:
+Graph ki Adjacency List banao.
+
+↓
+
+Step 2:
+Distance array banao.
+
+Sabka distance = INF
+
+Source ka distance = 0
+
+↓
+
+Step 3:
+Ek Set banao.
+
+Set me hamesha
+
+{distance,node}
+
+store hoga.
+
+↓
+
+Step 4:
+Set se sabse chhoti distance wala node nikalo.
+
+↓
+
+Step 5:
+Uske saare neighbours dekho.
+
+↓
+
+Step 6:
+Agar current distance + edge weight
+< neighbour ki old distance
+
+to
+
+distance update karo.
+
+↓
+
+Step 7:
+Old pair delete karo.
+
+↓
+
+Step 8:
+New pair insert karo.
+
+↓
+
+Step 9:
+Jab Set empty ho jaye
+
+Answer mil gaya.
+```
+
+---
+
+# ⭐ Visualization
+
+Suppose
+
+```
+         4
+    0 -------- 1
+    |          |
+ 1  |          |1
+    |          |
+    2 -------- 3
+        5
+```
+
+Source = 0
+
+Initially
+
+```
+Distance
+
+0 = 0
+
+1 = INF
+
+2 = INF
+
+3 = INF
+```
+
+Set
+
+```
+{0,0}
+```
+
+---
+
+Process
+
+```
+Remove
+
+{0,0}
+```
+
+Update
+
+```
+1 = 4
+
+2 = 1
+```
+
+Set
+
+```
+{1,2}
+
+{4,1}
+```
+
+---
+
+Ab
+
+Set automatically sort karta hai.
+
+To
+
+```
+{1,2}
+```
+
+pehle niklega.
+
+---
+
+Update
+
+```
+1
+
+Old = 4
+
+New = 3
+```
+
+Old delete
+
+```
+erase({4,1})
+```
+
+New insert
+
+```
+insert({3,1})
+```
+
+---
+
+Isi wajah se **Set** use karte hain.
+
+---
+
+# ⭐ Love Babbar Style Code (Comments ke saath)
+
+```cpp
+#include<iostream>
+#include<vector>
+#include<set>
+#include<climits>
+using namespace std;
+
+int main()
+{
+    int n,m;
+    cin>>n>>m;
+
+    // Adjacency List
+    // pair = {Neighbour, Weight}
+    vector<vector<pair<int,int>>> adj(n);
+
+    // Graph Input
+    for(int i=0;i<m;i++)
+    {
+        int u,v,wt;
+        cin>>u>>v>>wt;
+
+        // Undirected Graph
+        adj[u].push_back({v,wt});
+        adj[v].push_back({u,wt});
+    }
+
+    int src;
+    cin>>src;
+
+    // Distance Array
+    vector<int> dist(n,INT_MAX);
+
+    // Set me {Distance, Node} store hoga
+    set<pair<int,int>> st;
+
+    // Source ka distance 0
+    dist[src]=0;
+
+    st.insert({0,src});
+
+    // Jab tak set empty na ho
+    while(!st.empty())
+    {
+        // Minimum distance wala node
+        auto top=*(st.begin());
+
+        int node=top.second;
+        int nodeDistance=top.first;
+
+        // Process ho gaya
+        st.erase(st.begin());
+
+        // Saare neighbours check karo
+        for(auto neighbour:adj[node])
+        {
+            int nextNode=neighbour.first;
+            int weight=neighbour.second;
+
+            // Relaxation
+            if(nodeDistance+weight<dist[nextNode])
+            {
+                // Agar old entry exist karti hai
+                if(dist[nextNode]!=INT_MAX)
+                {
+                    // Purani entry hata do
+                    st.erase({dist[nextNode],nextNode});
+                }
+
+                // New shortest distance update
+                dist[nextNode]=nodeDistance+weight;
+
+                // Updated distance insert karo
+                st.insert({dist[nextNode],nextNode});
+            }
+        }
+    }
+
+    cout<<"Shortest Distance : ";
+
+    for(int i=0;i<n;i++)
+    {
+        if(dist[i]==INT_MAX)
+            cout<<-1<<" ";
+        else
+            cout<<dist[i]<<" ";
+    }
+}
+```
+
+---
+
+# ⭐ Dry Run
+
+Input
+
+```
+5 6
+
+0 1 4
+0 2 1
+2 1 2
+1 3 1
+2 3 5
+3 4 3
+
+0
+```
+
+---
+
+Initially
+
+```
+Distance
+
+0 INF INF INF INF
+```
+
+Set
+
+```
+{0,0}
+```
+
+---
+
+Remove
+
+```
+{0,0}
+```
+
+Update
+
+```
+1 = 4
+
+2 = 1
+```
+
+Set
+
+```
+{1,2}
+
+{4,1}
+```
+
+---
+
+Remove
+
+```
+{1,2}
+```
+
+Update
+
+```
+1
+
+Old = 4
+
+New = 3
+```
+
+Delete
+
+```
+{4,1}
+```
+
+Insert
+
+```
+{3,1}
+```
+
+---
+
+Remove
+
+```
+{3,1}
+```
+
+Update
+
+```
+3 = 4
+```
+
+---
+
+Remove
+
+```
+{4,3}
+```
+
+Update
+
+```
+4 = 7
+```
+
+---
+
+Final Distance
+
+```
+0
+
+3
+
+1
+
+4
+
+7
+```
+
+---
+
+# ⭐ Time Complexity
+
+```
+Insertion
+
+logV
+
+Deletion
+
+logV
+
+Total
+
+O((V+E) logV)
+```
+
+---
+
+# ⭐ TCS Revision Trick
+
+```
+Weight Nahi
+
+↓
+
+BFS
+
+--------------------
+
+Weight Hai
+
+↓
+
+Negative Weight
+
+↓
+
+Bellman Ford
+
+--------------------
+
+Weight Hai
+
+↓
+
+Positive Weight
+
+↓
+
+Cycle Ho Sakti Hai
+
+↓
+
+Dijkstra
+
+--------------------
+
+Weight Hai
+
+↓
+
+Positive Weight
+
+↓
+
+No Cycle (DAG)
+
+↓
+
+Topological Sort
+```
+
+---
+
+# 🎯 TCS Interview Me Agar Ye Puch De
+
+**Q1. Dijkstra me Set kyu use karte hain?**
+
+👉 Kyunki `set` hamesha sorted rehta hai, isliye minimum distance wala node `begin()` par mil jata hai. Agar kisi node ki better distance milti hai to purani pair ko `erase()` karke nayi pair `insert()` kar sakte hain.
+
+**Q2. Priority Queue aur Set me difference?**
+
+* **Priority Queue:** Old entries remove nahi hoti, duplicate entries aa sakti hain.
+* **Set:** Old entry remove karke sirf latest distance store karte hain, duplicate `(distance, node)` pairs nahi rehte.
+
+Ye format TCS NQT ke liye kaafi strong hai aur revision ke time bhi ek baar padhne me poora algorithm yaad aa jayega.
+
+
+
+Bhai **ye bahut important TCS interview question hai.** 🔥
+
+---
+
+# ❓ Agar Source Node Given Na Ho To?
+
+**Answer:** Ye depend karta hai ki question kya puch raha hai.
+
+## Case 1: TCS ne source nahi diya, lekin "Shortest Distance" pucha
+
+Example:
+
+> There are N cities connected by weighted roads. Find the shortest distance to all cities.
+
+👉 **Ye question incomplete hai.**
+
+Kyun?
+
+Kyunki shortest path **hamesha kisi source se hi calculate hota hai.**
+
+Example:
+
+```text
+0 ----- 1 ----- 2
+```
+
+Agar source
+
+```text
+0
+```
+
+hai
+
+Answer
+
+```text
+0 1 2
+```
+
+Agar source
+
+```text
+2
+```
+
+hai
+
+Answer
+
+```text
+2 1 0
+```
+
+Dono answer alag hain.
+
+**Isliye source hona zaroori hai.**
+
+---
+
+# Case 2: Source Mention Nahi Hai, Lekin Node 0 Se Start Karna Hai
+
+TCS aur GFG me aksar ye hota hai.
+
+Question me likha hota hai:
+
+> Find shortest distance from node 0 to all nodes.
+
+Ya kabhi directly nahi likhte, lekin examples se pata chal jata hai.
+
+Tab
+
+```cpp
+int src = 0;
+```
+
+kar dete hain.
+
+---
+
+# Case 3: User Se Source Input Lena Hai (Most Common TCS)
+
+```cpp
+int src;
+cin >> src;
+```
+
+Fir
+
+```cpp
+dist[src] = 0;
+```
+
+---
+
+# Case 4: Har Node Se Shortest Distance Chahiye
+
+Example:
+
+> Find shortest distance between every pair of vertices.
+
+👉 **Dijkstra nahi chalega.**
+
+Use hoga
+
+```text
+Floyd Warshall Algorithm
+```
+
+Ya
+
+Har node ko source bana kar Dijkstra chala sakte hain.
+
+```cpp
+for(int i=0; i<n; i++)
+{
+    dijkstra(i);
+}
+```
+
+---
+
+# ⭐ TCS Exam Trick
+
+| Question                        | Algorithm                          |
+| ------------------------------- | ---------------------------------- |
+| Source diya hai                 | Dijkstra ek baar                   |
+| Source nahi diya, node 0 assume | Dijkstra (src = 0)                 |
+| Har node se shortest path       | Floyd Warshall ya Dijkstra N times |
+| Single Source Shortest Path     | Dijkstra                           |
+
+---
+
+# 🎯 Interview Question
+
+**Interviewer:**
+
+> Agar source node hi nahi diya ho to Dijkstra kaise chalayoge?
+
+**Answer:**
+
+> **Dijkstra ek Single Source Shortest Path (SSSP) algorithm hai. Isliye source node hona zaroori hai. Agar source explicitly nahi diya gaya ho, to question me usually node 0 assume kiya jata hai ya input se source lena hota hai. Agar har node se shortest path chahiye, to Floyd-Warshall ya har node ko source bana kar Dijkstra chalana padega.**
+
+---
+
+# 💡 Love Babbar Trick (Yaad Rakhna)
+
+```text
+BFS
+      ↓
+Single Source
+
+Dijkstra
+      ↓
+Single Source
+
+Bellman-Ford
+      ↓
+Single Source
+
+Floyd-Warshall
+      ↓
+All Pairs
+```
+
+**TCS NQT me 90% questions me source diya hota hai (ya `0` assume karna hota hai). Agar source na ho aur question "all pairs shortest path" maange, to Dijkstra nahi, **Floyd-Warshall** sochna chahiye.
+
+
+😂😂 Sahi pakde bhai. Love Babbar ne **Prim's Algorithm `set` se hi padhaya hai**, to wahi de raha hoon.
+
+---
+
+# 📚 Prim's Algorithm (Using Set) | TCS Style
+
+---
+
+# ⭐ Algorithm (Hinglish)
+
+```text
+Step 1:
+Adjacency List banao.
+
+↓
+
+Step 2:
+3 Arrays banao
+
+key[] = Minimum weight
+parent[] = MST me parent
+mst[] = Node MST me hai ya nahi
+
+↓
+
+Step 3:
+Sab key = INF
+
+parent = -1
+
+mst = false
+
+↓
+
+Step 4:
+Node 0 se start karo.
+
+key[0] = 0
+
+↓
+
+Step 5:
+Set me {Key, Node} insert karo.
+
+↓
+
+Step 6:
+Set se minimum key wala node nikalo.
+
+↓
+
+Step 7:
+Us node ko MST me include karo.
+
+↓
+
+Step 8:
+Uske neighbours check karo.
+
+↓
+
+Agar
+
+Neighbour MST me nahi hai
+
+Aur
+
+Weight < key[Neighbour]
+
+↓
+
+Old pair delete karo.
+
+↓
+
+Key update karo.
+
+↓
+
+Parent update karo.
+
+↓
+
+New pair insert karo.
+
+↓
+
+Repeat till Set empty ho jaye.
+```
+
+---
+
+# ✅ TCS Style Code (Using Set)
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <set>
+#include <climits>
+using namespace std;
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+
+    // Adjacency List
+    // {Neighbour, Weight}
+    vector<vector<pair<int,int>>> adj(n);
+
+    // Graph Input
+    for(int i = 0; i < m; i++)
+    {
+        int u, v, wt;
+        cin >> u >> v >> wt;
+
+        // Undirected Graph
+        adj[u].push_back({v, wt});
+        adj[v].push_back({u, wt});
+    }
+
+    // Minimum Edge Weight
+    vector<int> key(n, INT_MAX);
+
+    // Parent of every node
+    vector<int> parent(n, -1);
+
+    // Node MST me include hua ya nahi
+    vector<bool> mst(n, false);
+
+    // {Key, Node}
+    set<pair<int,int>> st;
+
+    // Start from node 0
+    key[0] = 0;
+
+    st.insert({0,0});
+
+    while(!st.empty())
+    {
+        // Minimum key wala node
+        auto top = *(st.begin());
+
+        int node = top.second;
+
+        st.erase(st.begin());
+
+        // Node ko MST me include karo
+        mst[node] = true;
+
+        // Saare neighbours check karo
+        for(auto neighbour : adj[node])
+        {
+            int nextNode = neighbour.first;
+            int weight = neighbour.second;
+
+            // Agar node MST me nahi hai
+            // Aur better weight mil gaya
+            if(!mst[nextNode] && weight < key[nextNode])
+            {
+                // Old pair remove karo
+                if(key[nextNode] != INT_MAX)
+                {
+                    st.erase({key[nextNode], nextNode});
+                }
+
+                // Update key
+                key[nextNode] = weight;
+
+                // Parent update
+                parent[nextNode] = node;
+
+                // New pair insert
+                st.insert({key[nextNode], nextNode});
+            }
+        }
+    }
+
+    int cost = 0;
+
+    cout << "Edges in MST\n";
+
+    for(int i = 1; i < n; i++)
+    {
+        cout << parent[i] << " - " << i
+             << " Weight = " << key[i] << endl;
+
+        cost += key[i];
+    }
+
+    cout << "\nMinimum Cost = " << cost;
+
+    return 0;
+}
+```
+
+---
+
+# ⭐ Dry Run
+
+Input
+
+```text
+4 5
+
+0 1 10
+0 2 6
+0 3 5
+1 3 15
+2 3 4
+```
+
+Initially
+
+```text
+Key
+
+0 INF INF INF
+```
+
+Set
+
+```text
+{0,0}
+```
+
+---
+
+Node 0
+
+Update
+
+```text
+1 =10
+
+2 =6
+
+3 =5
+```
+
+Set
+
+```text
+{5,3}
+
+{6,2}
+
+{10,1}
+```
+
+---
+
+Node 3
+
+Edge
+
+```text
+3 ->2
+
+Weight =4
+```
+
+Old Key
+
+```text
+6
+```
+
+New Key
+
+```text
+4
+```
+
+Delete
+
+```cpp
+st.erase({6,2});
+```
+
+Insert
+
+```cpp
+st.insert({4,2});
+```
+
+---
+
+Final MST
+
+```text
+0 - 3
+
+3 - 2
+
+0 - 1
+```
+
+Cost
+
+```text
+5 + 4 + 10
+
+=
+
+19
+```
+
+---
+
+# ⭐ Time Complexity
+
+```text
+Insertion
+
+logV
+
+Deletion
+
+logV
+
+Total
+
+O(E logV)
+```
+
+---
+
+# 🎯 TCS Trick (Bahut Important)
+
+| Dijkstra           | Prim              |
+| ------------------ | ----------------- |
+| dist[]             | key[]             |
+| Shortest Distance  | Minimum Edge      |
+| Relaxation         | Key Update        |
+| Distance Answer    | MST Cost          |
+| Source → All Nodes | Connect All Nodes |
+
+---
+
+Ye **exact Love Babbar wala `set` implementation** hai, bas maine usko **TCS NQT style**, Hinglish comments aur complete `main()` ke saath likha hai.
+
+
+
+
+
+Bilkul bhai 🔥. **Kruskal Algorithm** TCS NQT me bahut baar **"Minimum Cost to Connect All Cities"** type questions me pucha jata hai. Main wahi format follow kar raha hoon jo hum Dijkstra aur Prim me kar rahe the.
+
+---
+
+# 📚 Topic: Kruskal Algorithm (Minimum Spanning Tree)
+
+---
+
+# ⭐ TCS Me Kaise Puch Sakta Hai?
+
+**Example 1**
+
+> There are **N cities** connected by roads. Every road has a construction cost. Find the **minimum cost** required to connect all cities.
+
+✅ Kruskal / Prim
+
+---
+
+**Example 2**
+
+> Connect all computers using minimum cable cost.
+
+✅ Kruskal
+
+---
+
+# ⭐ Algorithm (Hinglish)
+
+```text
+Step 1:
+Saari edges ko weight ke according sort karo.
+
+↓
+
+Step 2:
+Har node ka parent khud ko banao.
+(Disjoint Set / Union Find)
+
+↓
+
+Step 3:
+Ek-ek edge uthao (smallest weight se).
+
+↓
+
+Step 4:
+Check karo dono nodes alag component me hain ya nahi.
+
+↓
+
+Agar alag hain
+
+↓
+
+Edge ko MST me include karo.
+
+↓
+
+Union kar do.
+
+↓
+
+Cost me weight add karo.
+
+↓
+
+Agar same component me hain
+
+↓
+
+Ignore karo.
+(Cycle banegi)
+
+↓
+
+Step 5:
+Jab N-1 edges select ho jaye
+
+↓
+
+Answer mil gaya.
+```
+
+---
+
+# ⭐ TCS Style Code (Easy + Comments)
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// Edge Structure
+struct Edge
+{
+    int u, v, wt;
+};
+
+// Sort according to weight
+bool cmp(Edge a, Edge b)
+{
+    return a.wt < b.wt;
+}
+
+vector<int> parent;
+
+// Find Parent
+int findParent(int node)
+{
+    if(parent[node] == node)
+        return node;
+
+    return parent[node] = findParent(parent[node]);
+}
+
+// Union
+void unionSet(int u, int v)
+{
+    u = findParent(u);
+    v = findParent(v);
+
+    parent[v] = u;
+}
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+
+    vector<Edge> edges;
+
+    // Input
+    for(int i = 0; i < m; i++)
+    {
+        Edge e;
+        cin >> e.u >> e.v >> e.wt;
+        edges.push_back(e);
+    }
+
+    // Sort edges
+    sort(edges.begin(), edges.end(), cmp);
+
+    // Parent Initialization
+    parent.resize(n);
+
+    for(int i = 0; i < n; i++)
+        parent[i] = i;
+
+    int cost = 0;
+
+    cout << "Edges in MST\n";
+
+    // Process all edges
+    for(auto e : edges)
+    {
+        int u = findParent(e.u);
+        int v = findParent(e.v);
+
+        // No cycle
+        if(u != v)
+        {
+            cout << e.u << " - " << e.v
+                 << " Weight = " << e.wt << endl;
+
+            cost += e.wt;
+
+            unionSet(u, v);
+        }
+    }
+
+    cout << "\nMinimum Cost = " << cost;
+
+    return 0;
+}
+```
+
+---
+
+# ⭐ Input
+
+```text
+4 5
+0 1 10
+0 2 6
+0 3 5
+1 3 15
+2 3 4
+```
+
+---
+
+# ⭐ Output
+
+```text
+Edges in MST
+
+2 - 3 Weight = 4
+0 - 3 Weight = 5
+0 - 1 Weight = 10
+
+Minimum Cost = 19
+```
+
+---
+
+# ⭐ Dry Run
+
+### Step 1: Sort Edges
+
+```text
+2-3 = 4
+
+0-3 = 5
+
+0-2 = 6
+
+0-1 = 10
+
+1-3 = 15
+```
+
+---
+
+### Step 2
+
+Take
+
+```text
+2-3
+```
+
+Cost
+
+```text
+4
+```
+
+---
+
+### Step 3
+
+Take
+
+```text
+0-3
+```
+
+Cost
+
+```text
+9
+```
+
+---
+
+### Step 4
+
+Take
+
+```text
+0-2
+```
+
+❌ Ignore
+
+```text
+Cycle ban jayegi.
+```
+
+---
+
+### Step 5
+
+Take
+
+```text
+0-1
+```
+
+Cost
+
+```text
+19
+```
+
+Ho gya.
+
+---
+
+# ⭐ Time Complexity
+
+```text
+Sorting
+
+O(E log E)
+
+Union Find
+
+≈ O(E)
+
+Total
+
+O(E log E)
+```
+
+---
+
+# ⭐ Prim vs Kruskal
+
+| Prim                          | Kruskal                              |
+| ----------------------------- | ------------------------------------ |
+| Node se start hota hai        | Edge se start hota hai               |
+| Minimum Edge choose karta hai | Minimum Weight Edge choose karta hai |
+| Priority Queue / Set          | Sorting + Disjoint Set               |
+| Graph Traversal               | Edge Processing                      |
+| O(E log V)                    | O(E log E)                           |
+
+---
+
+# ⭐ TCS Trick
+
+Question me agar likha ho:
+
+```text
+Connect all cities
+
+Minimum cable cost
+
+Minimum road cost
+
+Network design
+
+Minimum total cost
+```
+
+Dimag me
+
+```text
+Minimum Spanning Tree
+
+↓
+
+Prim ya Kruskal
+```
+
+Agar **edges already diye hain aur unhe sort karke process karna easy lag raha ho**, to **Kruskal** use karo. Agar **graph traversal se grow karna hai**, to **Prim** use karo.
+
+---
+
+# 🔥 1-Line Revision
+
+```text
+Dijkstra → Shortest Path
+
+Prim → Node se MST banao
+
+Kruskal → Edge sort karke MST banao
+```
+
+Ye code **TCS NQT level** ke liye sufficient hai aur interview me bhi explain karna easy rahega.
+
+
+Bilkul bhai 🔥. **Bridges in Graph (Tarjan's Algorithm)** bhi TCS NQT me important topic hai. Main wahi format follow kar raha hoon.
+
+---
+
+# 📚 Topic: Bridges in Graph (Tarjan's Algorithm)
+
+---
+
+# ⭐ TCS Me Kaise Puch Sakta Hai?
+
+### Example 1
+
+> Find all critical roads in a network.
+
+✅ Bridge
+
+---
+
+### Example 2
+
+> Find roads whose removal disconnects the cities.
+
+✅ Bridge
+
+---
+
+### Example 3
+
+> Find critical network connections.
+
+✅ Bridge
+
+---
+
+# ⭐ Bridge Kya Hota Hai?
+
+Bridge wo edge hoti hai jise hata do to graph **2 parts me divide** ho jaye.
+
+Example
+
+```text
+0 -----1------2
+       |
+       |
+       3
+```
+
+Edge
+
+```text
+1-----2
+```
+
+agar hata do
+
+```text
+2
+```
+
+alag ho jayega.
+
+Isliye
+
+```text
+1-2
+```
+
+Bridge hai.
+
+---
+
+# ⭐ Algorithm (Hinglish)
+
+```text
+Step 1:
+
+DFS Start karo.
+
+↓
+
+Step 2:
+
+Har node ka
+
+Discovery Time (disc)
+
+aur
+
+Lowest Time (low)
+
+store karo.
+
+↓
+
+Step 3:
+
+Neighbour visit nahi hua
+
+↓
+
+DFS Call karo.
+
+↓
+
+Wapas aane ke baad
+
+low[node]
+
+update karo.
+
+↓
+
+Step 4:
+
+Agar
+
+low[child] > disc[parent]
+
+↓
+
+To
+
+parent-child
+
+Bridge hai.
+
+↓
+
+Step 5:
+
+Agar neighbour already visited hai
+
+Aur parent nahi hai
+
+↓
+
+Back Edge mili
+
+↓
+
+low update karo.
+```
+
+---
+
+# ⭐ Trick (Sabse Important)
+
+```text
+if(low[child] > disc[parent])
+
+↓
+
+Bridge
+```
+
+Bas ye condition yaad rakhni hai.
+
+---
+
+# ✅ TCS Style Code
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int timer = 0;
+
+void dfs(int node, int parent,
+         vector<vector<int>> &adj,
+         vector<int> &vis,
+         vector<int> &disc,
+         vector<int> &low)
+{
+    vis[node] = 1;
+
+    disc[node] = low[node] = timer++;
+
+    for(int neigh : adj[node])
+    {
+        // Parent ko ignore karo
+        if(neigh == parent)
+            continue;
+
+        // Not Visited
+        if(!vis[neigh])
+        {
+            dfs(neigh, node, adj, vis, disc, low);
+
+            // Low Update
+            low[node] = min(low[node], low[neigh]);
+
+            // Bridge Condition
+            if(low[neigh] > disc[node])
+            {
+                cout << node << " - "
+                     << neigh << endl;
+            }
+        }
+        else
+        {
+            // Back Edge
+            low[node] = min(low[node], disc[neigh]);
+        }
+    }
+}
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+
+    vector<vector<int>> adj(n);
+
+    for(int i=0;i<m;i++)
+    {
+        int u,v;
+        cin>>u>>v;
+
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector<int> vis(n,0);
+    vector<int> disc(n);
+    vector<int> low(n);
+
+    cout<<"Bridges are:\n";
+
+    for(int i=0;i<n;i++)
+    {
+        if(!vis[i])
+        {
+            dfs(i,-1,adj,vis,disc,low);
+        }
+    }
+
+    return 0;
+}
+```
+
+---
+
+# ⭐ Input
+
+```text
+5 5
+0 1
+1 2
+2 0
+1 3
+3 4
+```
+
+---
+
+# ⭐ Output
+
+```text
+Bridges are:
+
+3 - 4
+1 - 3
+```
+
+---
+
+# ⭐ Dry Run
+
+Graph
+
+```text
+      0
+     / \
+    1---2
+    |
+    |
+    3
+    |
+    |
+    4
+```
+
+Cycle
+
+```text
+0-1-2
+```
+
+me koi bridge nahi hai.
+
+Edge
+
+```text
+1-3
+```
+
+hatate hi
+
+```text
+3
+
+4
+```
+
+alag ho jayenge.
+
+Bridge.
+
+Edge
+
+```text
+3-4
+```
+
+hatate hi
+
+```text
+4
+```
+
+alag ho jayega.
+
+Bridge.
+
+---
+
+# ⭐ Time Complexity
+
+```text
+DFS
+
+O(V + E)
+```
+
+---
+
+# ⭐ TCS Keywords
+
+Agar question me likha ho
+
+```text
+Critical Connection
+
+Critical Road
+
+Network Failure
+
+Disconnect Graph
+
+Important Road
+
+Remove Edge
+```
+
+👇 Seedha sochna
+
+```text
+Bridge
+
+↓
+
+Tarjan Algorithm
+```
+
+---
+
+# ⭐ Interview Trick (1 Line)
+
+```text
+Bridge
+
+↓
+
+Edge Remove Karne Se
+
+Graph Disconnect Ho Jaye.
+```
+
+---
+
+# ⭐ Sabse Important Line (Exam Me Yaad Rakhna)
+
+```cpp
+if(low[child] > disc[parent])
+{
+    // Bridge Found
+}
+```
+
+Ye **Love Babbar ka standard Tarjan implementation** hai aur **TCS NQT** ke liye sufficient hai.
