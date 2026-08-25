@@ -9,67 +9,43 @@ Ye code **Graph Data Structure** ka hai jisme **Adjacency List** ka use karke **
 ## Complete Code
 
 ```cpp
-#include <iostream>
-#include <unordered_map>
-#include <list>
+
+#include <bits/stdc++.h>
 using namespace std;
 
-class graph {
-
-public:
-    unordered_map<int, list<int>> adj;
-
-    void addEdge(int u, int v, bool direction) {
-
-        // direction = 0 -> undirected
-        // direction = 1 -> directed graph
-
-        // create an edge from u to v
-        adj[u].push_back(v);
-
-        if (direction == 0) {
-            adj[v].push_back(u);
-        }
-    }
-
-    void printAdjList() {
-
-        for (auto i : adj) {
-
-            cout << i.first << " -> ";
-
-            for (auto j : i.second) {
-                cout << j << ", ";
-            }
-
-            cout << endl;
-        }
-    }
-};
-
 int main() {
+    int V, E;
 
-    int n;
-    cout << "Enter the number of nodes" << endl;
-    cin >> n;
+    // V = number of vertices
+    // E = number of edges
+    cin >> V >> E;
 
-    int m;
-    cout << "Enter the number of edges" << endl;
-    cin >> m;
+    // Create adjacency list
+    vector<vector<int>> adj(V);
 
-    graph g;
-
-    for (int i = 0; i < m; i++) {
-
+    // Take all edges
+    for (int i = 0; i < E; i++) {
         int u, v;
         cin >> u >> v;
 
-        // creating an undirected graph
-        g.addEdge(u, v, 0);
+        // For Undirected Graph
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
 
-    // printing graph
-    g.printAdjList();
+    // Print adjacency list
+    cout << "Adjacency List:\n";
+
+    for (int i = 0; i < V; i++) {
+        cout << i << " -> ";
+
+        // Print all neighbors of node i
+        for (int neighbor : adj[i]) {
+            cout << neighbor << " ";
+        }
+
+        cout << endl;
+    }
 
     return 0;
 }
@@ -383,6 +359,79 @@ vector<int> bfsTraversal(int n, vector<vector<int>> &adj) {
 
 ---
 
+```cpp
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// DFS function for cycle detection
+bool dfs(int node, int parent,
+         vector<vector<int>>& adj,
+         vector<int>& visited) {
+
+    // Mark current node visited
+    visited[node] = 1;
+
+    for (int neighbor : adj[node]) {
+
+        // If neighbor is not visited
+        if (!visited[neighbor]) {
+
+            // Visit neighbor
+            if (dfs(neighbor, node, adj, visited)) {
+                return true;
+            }
+        }
+
+        // Neighbor is already visited
+        // AND it is not the parent
+        // => Cycle exists
+        else if (neighbor != parent) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+int main() {
+    int V, E;
+    cin >> V >> E;
+
+    vector<vector<int>> adj(V);
+
+    // Input graph
+    for (int i = 0; i < E; i++) {
+        int u, v;
+        cin >> u >> v;
+
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector<int> visited(V, 0);
+
+    bool hasCycle = false;
+
+    // Handle disconnected graph also
+    for (int i = 0; i < V; i++) {
+        if (!visited[i]) {
+            if (dfs(i, -1, adj, visited)) {
+                hasCycle = true;
+                break;
+            }
+        }
+    }
+
+    if (hasCycle)
+        cout << "Cycle Exists";
+    else
+        cout << "No Cycle";
+
+    return 0;
+}
+
+```
 # TCS NQT Version
 
 ```cpp
